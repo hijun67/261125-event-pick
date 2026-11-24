@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>이벤트픽 — 정부·공공기관·기업 경품 이벤트·공모전 모음</title>
+<meta name="description" content="2026년 11월 25일 기준으로 직접 확인한 정부·지자체·공공기관·기업의 경품 이벤트, 퀴즈, 공모전을 마감일·경품·참여 방법과 함께 모았습니다. 키워드 검색과 주최·유형·마감임박 필터로 찾아보세요." />
+<meta name="theme-color" content="#1f2a5a" />
+<link rel="canonical" href="{{SITE_URL}}/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="이벤트픽 — 정부·공공기관·기업 경품 이벤트·공모전 모음" />
+<meta property="og:description" content="직접 확인한 경품 이벤트·퀴즈·공모전을 마감 D-day와 경품 내역으로 한눈에." />
+<meta property="og:url" content="{{SITE_URL}}/" />
+<link rel="stylesheet" href="/style.css" />
+<script type="application/ld+json">{{JSONLD}}</script>
+</head>
+<body>
+<a class="skip" href="#list">목록으로 바로가기</a>
+<header class="site-head">
+  <div class="head-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">🎁</span>
+      <div>
+        <h1>이벤트픽</h1>
+        <p class="tagline">정부·공공기관·기업의 경품 이벤트 · 퀴즈 · 공모전 모음</p>
+      </div>
+    </div>
+    <div class="head-stats" id="head-stats">
+      <span><strong>{{COUNT}}</strong>건 수록</span>
+      <span><strong>{{SOON}}</strong>건 마감임박</span>
+      <span class="muted">확인일 {{UPDATED}}</span>
+    </div>
+  </div>
+</header>
+
+<div class="search-wrap">
+  <div class="search-inner">
+    <label class="sr-only" for="q">키워드 검색</label>
+    <div class="search-box">
+      <span class="search-icon" aria-hidden="true">🔍</span>
+      <input id="q" type="search" placeholder="제목·주최·경품·태그로 검색 (예: 상품권, 공모전, 서울)" autocomplete="off" />
+      <button type="button" class="clear-btn" id="clear-q" aria-label="검색어 지우기" hidden>✕</button>
+    </div>
+    <div class="control-row">
+      <div class="seg" role="group" aria-label="주최 구분">
+        <button type="button" class="seg-btn is-on" data-category="전체">전체</button>
+        <button type="button" class="seg-btn" data-category="정부·지자체">정부·지자체</button>
+        <button type="button" class="seg-btn" data-category="공공기관">공공기관</button>
+        <button type="button" class="seg-btn" data-category="기업">기업</button>
+      </div>
+      <div class="seg" role="group" aria-label="유형">
+        <button type="button" class="seg-btn is-on" data-type="전체">전체 유형</button>
+        <button type="button" class="seg-btn" data-type="경품·이벤트">경품·이벤트</button>
+        <button type="button" class="seg-btn" data-type="퀴즈">퀴즈</button>
+        <button type="button" class="seg-btn" data-type="공모전">공모전</button>
+      </div>
+      <div class="selects">
+        <label class="select-label">상태
+          <select id="status">
+            <option value="전체" selected>전체</option>
+            <option value="진행중">진행중</option>
+            <option value="마감임박">마감임박 (D-7 이내)</option>
+          </select>
+        </label>
+        <label class="select-label">정렬
+          <select id="sort">
+            <option value="deadline" selected>마감임박순</option>
+            <option value="recent">최신등록순</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="result-row">
+      <p id="result-count" aria-live="polite">불러오는 중…</p>
+      <button type="button" class="reset-btn" id="reset">필터 초기화</button>
+    </div>
+  </div>
+</div>
+
+<main id="list" class="list-wrap">
+  <div id="cards" class="cards"></div>
+  <p id="empty" class="empty" hidden>조건에 맞는 이벤트가 없습니다. 검색어나 필터를 바꿔 보세요.</p>
+  <p id="load-error" class="empty" hidden>목록을 불러오지 못했습니다. 잠시 뒤 새로 고침해 주세요.</p>
+</main>
+
+<dialog id="detail" class="modal" aria-labelledby="detail-title">
+  <form method="dialog" class="modal-close-form"><button class="modal-close" aria-label="닫기">✕</button></form>
+  <div id="detail-body"></div>
+</dialog>
+
+<footer class="site-foot">
+  <div class="foot-inner">
+    <p><strong>어떻게 모았나</strong> — 각 기관·기업의 공식 공고 페이지를 직접 열어 제목·주최·마감일·경품·참여 방법을 확인하고, 확인일을 남겼습니다. 확인하지 못한 항목은 넣지 않았습니다.</p>
+    <p><strong>알아 두세요</strong> — 경품과 일정은 주최 측 사정으로 바뀔 수 있습니다. 응모·제출은 언제나 원문 페이지에서 직접 하시고, 개인정보 제공 조건과 참가 자격을 먼저 확인하세요. 이 사이트는 응모를 대신하지 않습니다.</p>
+    <p class="muted">수록 {{COUNT}}건 · 마지막 확인 {{UPDATED}} · <a href="/about.html">소개·수집 원칙</a></p>
+  </div>
+</footer>
+
+<script type="module" src="/app.js"></script>
+</body>
+</html>

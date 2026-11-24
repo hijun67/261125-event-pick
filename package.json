@@ -1,0 +1,15 @@
+{
+  "name": "event-pick",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "정부·공공기관·기업의 경품 이벤트·퀴즈·공모전을 모아 보여 주는 사이트",
+  "scripts": {
+    "collect": "node scripts/collect.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/test.mjs",
+    "update": "node scripts/collect.mjs && node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs"
+  },
+  "engines": { "node": ">=18" }
+}
