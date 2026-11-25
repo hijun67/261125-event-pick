@@ -23,9 +23,27 @@ const clean = (h = '') =>
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    .replace(/&middot;/g, '·')
+    .replace(/&lsquo;|&rsquo;/g, "'")
+    .replace(/&ldquo;|&rdquo;/g, '"')
+    .replace(/&hellip;/g, '…')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
     .replace(/\s+/g, ' ')
     .trim();
 const norm = (s = '') => s.replace(/[\s\[\(\)·\-_,.!?~'"“”‘’]/g, '').toLowerCase();
+
+// 주최 이름으로 주최 구분을 정합니다. (목록 소스는 구분을 주지 않는 경우가 많음)
+const LOCAL_RE = /(특별시|광역시|특별자치시|특별자치도|자치도|자치시|특별자치|[가-힣]+시$|[가-힣]+군$|[가-힣]+구$|[가-힣]+도$)/;
+const GOV_RE = /(정부|부$|청$|처$|국회|법원|검찰|기상청|산림청|농촌진흥청|행정안전부|보건복지부|교육부|과학기술정보통신부|문화체육관광부|환경부|고용노동부|국토교통부|해양수산부|식품의약품안전처|공정거래위원회|금융위원회|방송통신위원회|개인정보보호위원회|국가보훈부|외교부|법무부|국방부|기획재정부|산업통상자원부|중소벤처기업부|여성가족부|통일부|농림축산식품부)/;
+const CORP_RE = /(㈜|\(주\)|주식회사|자이|현대자동차|기아|양지사|퓨리얼|재능TV|하퍼스바자|대한상공회의소|BMW|온작|이마트|롯데|신세계|삼성|LG|KT|SK|카카오|네이버|교보|예스24|무신사|오늘의집|밀리의서재|동아일보|대원씨아이|매경|한국경제|조선일보|중앙일보|한겨레|쿠팡|배달의민족|야놀자|여기어때|에어비앤비|스타벅스|투썸|메가|컴포즈|GS25|CU|세븐일레븐)/;
+function classify(organizer = '', fallback = '공공기관') {
+  const name = organizer.replace(/\s+/g, ' ').trim();
+  if (CORP_RE.test(name)) return '기업';
+  if (GOV_RE.test(name)) return '정부·지자체';
+  if (LOCAL_RE.test(name)) return '정부·지자체';
+  return fallback;
+}
+
 
 async function get(url) {
   const ac = new AbortController();
@@ -57,7 +75,7 @@ export function parseEventhouse(html, source) {
     const period = chunk.match(/ㆍ응모기간<\/div>\s*<div class='td_rd'>\s*(\d{4}-\d{2}-\d{2})\s*~\s*(\d{4}-\d{2}-\d{2})/);
     if (!subject || !period) continue;
     const organizer = clean(subject[1]);
-    const title = clean(subject[2]).replace(/\s*이벤트!!$/,'').replace(/\s*!!$/,'');
+    const title = clean(subject[2]).replace(/\s*이벤트!!$/,'').replace(/\s*경품$/,'').replace(/\s*!!$/,'');
     if (!title) continue;
     const prize = clean((chunk.match(/ㆍ경품내역<\/div>\s*<div class='td_r[^']*'[^>]*>([\s\S]*?)<\/div>/) || [])[1] || '');
     const how = clean((chunk.match(/ㆍ응모방법<\/div>\s*<div class='td_rd'>([\s\S]*?)<\/div>/) || [])[1] || '');
@@ -70,7 +88,7 @@ export function parseEventhouse(html, source) {
       prize: prize || '원문 확인',
       howTo: how || '원문 확인',
       type: typeFromForm(form),
-      category: source.category,
+      category: classify(organizer, source.category),
       url: source.url,
       sourceLabel: '이벤트하우스 목록(원문은 주최 누리집)',
       tags: [organizer, typeFromForm(form)].filter(Boolean),
@@ -143,7 +161,10 @@ export function parseTouredu(html, source) {
   const re = /<a href="([^"]*\/home\/support\/promotions\/prgs\/(\d+)[^"]*)"[\s\S]{0,600}?<\/a>/g;
   for (const m of html.matchAll(re)) {
     const text = clean(m[0]);
-    const title = text.replace(/^\[이벤트\]\s*/, '').replace(/^\d+\s*/, '').trim();
+    const title = text
+      .replace(/^\[이벤트\]\s*/, '')
+      .replace(/\s*\d{4}\.\s*\d{1,2}\.\s*\d{1,2}\.?\s*~\s*\d{4}\.\s*\d{1,2}\.\s*\d{1,2}\.?\s*$/, '')
+      .trim();
     const period = text.match(/(\d{4}\.\d{2}\.\d{2})\s*~\s*(\d{4}\.\d{2}\.\d{2})/);
     if (!title || !period) continue;
     out.push({
@@ -216,8 +237,10 @@ async function main() {
   let added = 0;
   let updated = 0;
 
+  const farLimit = new Date(Date.now() + 730 * 86400000).toISOString().slice(0, 10);
   for (const entry of fresh) {
     if (entry.end < today) continue;
+    if (entry.end > farLimit) continue; // 출처의 오기(예: 2036년)나 상시 모집은 목록에서 뺍니다.
     if (curatedTitles.has(norm(entry.title))) continue;
     if (curatedKeys.has(`${norm(entry.organizer)}|${entry.end}`)) continue; // 직접 확인 항목과 주최·마감일이 겹치면 중복으로 봄
     if (seen.has(entry.id)) continue;

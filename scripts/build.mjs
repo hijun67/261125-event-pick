@@ -44,7 +44,7 @@ const jsonld = JSON.stringify({
         '@type': 'ListItem',
         position: i + 1,
         name: e.title,
-        url: `${SITE}/e/${e.id}.html`,
+        url: `${SITE}/e/${e.id}`,
       })),
     },
   ],
@@ -78,7 +78,7 @@ for (const e of events) {
     eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
     eventStatus: 'https://schema.org/EventScheduled',
     description: `${e.prize} — ${e.howTo}`,
-    url: `${SITE}/e/${e.id}.html`,
+    url: `${SITE}/e/${e.id}`,
     organizer: { '@type': 'Organization', name: e.organizer },
     inLanguage: 'ko-KR',
   }).replace(/</g, '\\u003c');
@@ -90,7 +90,7 @@ for (const e of events) {
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${escapeHtml(e.title)} — ${escapeHtml(e.organizer)} ${escapeHtml(e.type)} | 이벤트픽</title>
 <meta name="description" content="${escapeHtml(`${e.organizer} ${e.title} · 마감 ${fmtPeriod(e)} · ${e.prize}`)}" />
-<link rel="canonical" href="${SITE}/e/${e.id}.html" />
+<link rel="canonical" href="${SITE}/e/${e.id}" />
 <link rel="stylesheet" href="/style.css" />
 <script type="application/ld+json">${ld}</script>
 </head>
@@ -112,7 +112,7 @@ for (const e of events) {
   </div>
   <p class="detail-note">경품과 마감일은 주최 측 사정으로 바뀔 수 있습니다. 응모 전 원문 공고를 다시 확인하세요.</p>
 </main>
-<footer class="site-foot"><div class="foot-inner"><p class="muted">수록 ${events.length}건 · 마지막 확인 ${today} · <a href="/about.html">소개·수집 원칙</a></p></div></footer>
+<footer class="site-foot"><div class="foot-inner"><p class="muted">수록 ${events.length}건 · 마지막 확인 ${today} · <a href="/about">소개·수집 원칙</a></p></div></footer>
 </body>
 </html>`;
   fs.writeFileSync(path.join(PUB, 'e', `${e.id}.html`), html);
@@ -124,7 +124,7 @@ const about = `<!doctype html>
 <head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>소개·수집 원칙 | 이벤트픽</title>
 <meta name="description" content="이벤트픽이 무엇을, 어떻게 모아 확인하는지와 응모 전 확인 사항을 정리했습니다." />
-<link rel="canonical" href="${SITE}/about.html" /><link rel="stylesheet" href="/style.css" /></head>
+<link rel="canonical" href="${SITE}/about" /><link rel="stylesheet" href="/style.css" /></head>
 <body>
 <header class="site-head"><div class="head-inner"><div class="brand"><span class="brand-mark" aria-hidden="true">🎁</span><div><h1><a href="/" style="color:#fff">이벤트픽</a></h1><p class="tagline">정부·공공기관·기업의 경품 이벤트 · 퀴즈 · 공모전 모음</p></div></div></div></header>
 <main class="detail-page">
@@ -151,7 +151,7 @@ fs.writeFileSync(path.join(PUB, '404.html'), `<!doctype html>
 <main class="list-wrap"><p class="empty" style="padding-top:80px">요청한 페이지가 없습니다. 마감된 이벤트일 수 있습니다.<br /><a href="/">전체 목록으로 →</a></p></main></body></html>`);
 
 /* sitemap · robots */
-const urls = [`${SITE}/`, `${SITE}/about.html`, ...events.map((e) => `${SITE}/e/${e.id}.html`)];
+const urls = [`${SITE}/`, `${SITE}/about`, ...events.map((e) => `${SITE}/e/${e.id}`)];
 fs.writeFileSync(path.join(PUB, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((u, i) => `  <url><loc>${u}</loc><lastmod>${today}</lastmod><changefreq>${i < 2 ? 'daily' : 'weekly'}</changefreq><priority>${i === 0 ? '1.0' : i === 1 ? '0.6' : '0.7'}</priority></url>`).join('\n')}

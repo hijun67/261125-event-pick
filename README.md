@@ -7,6 +7,12 @@
 - 저장소: `hijun67/261125-event-pick`
 - 기준일: 2026-11-25 (KST)
 
+## 화면 캡처
+
+| 데스크톱 1440px | 모바일 390px | 상세 모달(모바일) |
+|---|---|---|
+| ![데스크톱](docs/screenshots/desktop-1440.png) | ![모바일](docs/screenshots/mobile-390.png) | ![상세](docs/screenshots/mobile-detail.png) |
+
 ## 화면
 
 | 요소 | 설명 |
@@ -51,6 +57,7 @@ npm run serve     # 로컬 확인 http://127.0.0.1:4173
 ## 배포
 
 Cloudflare Pages 정적 배포입니다(`public/` 업로드). `public/_headers`에 기본 보안 헤더가 들어 있습니다.
+프로젝트는 Git 연동이 아니라 **직접 업로드** 방식이라, 갱신할 때는 `npm run update` 뒤 아래 명령을 다시 실행합니다.
 
 ```bash
 npx wrangler pages deploy public --project-name=event-pick
