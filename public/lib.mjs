@@ -94,6 +94,17 @@ export function winnersOf(ev = {}) {
   return m ? `${m[1]}명` : '';
 }
 
+/** 저장된 단계가 없으면 응모 방법의 화살표·번호 표기를 단계로 나눕니다. */
+export function stepsOf(ev = {}) {
+  if (Array.isArray(ev.steps) && ev.steps.length) return ev.steps.slice(0, 6);
+  const how = String(ev.howTo || '');
+  if (how.includes('→')) {
+    const parts = how.split('→').map((x) => x.replace(/^[\s①-⑩\d.)]+/, '').trim()).filter((x) => x.length > 1);
+    if (parts.length >= 2) return parts.slice(0, 6);
+  }
+  return [];
+}
+
 export function announceOf(ev = {}) {
   return ev.announceDate ? fmtDate(ev.announceDate) : (ev.announceNote || '');
 }
@@ -253,7 +264,7 @@ export function renderDetail(ev, opts = {}) {
   const now = opts.now || new Date();
   const saved = opts.saved instanceof Set ? opts.saved.has(ev.id) : Boolean(opts.saved && opts.saved[ev.id]);
   const done = opts.done instanceof Set ? opts.done.has(ev.id) : Boolean(opts.done && opts.done[ev.id]);
-  const steps = ev.steps && ev.steps.length ? ev.steps : [];
+  const steps = stepsOf(ev);
   const winners = winnersOf(ev);
   const announce = announceOf(ev);
   const left = dday(ev.end, now);
@@ -274,7 +285,7 @@ export function renderDetail(ev, opts = {}) {
     <div><span>발표일</span><b>${escapeHtml(announce || '원문 공고 확인')}</b></div>
     <div><span>응모 형태</span><b>${escapeHtml(entryTypeOf(ev))}</b></div>
     <div><span>경품 유형</span><b>${escapeHtml(prizeTypeOf(ev) === '기타' ? '원문 확인' : prizeTypeOf(ev))}</b></div>
-    <div><span>참여 대상</span><b>${escapeHtml(ev.target || '제한 없음(원문 확인)')}</b></div>
+    <div><span>참여 대상</span><b>${escapeHtml(ev.target || '원문 공고 확인')}</b></div>
   </div>
   <section class="prize-box">
     <h3>경품·시상</h3>

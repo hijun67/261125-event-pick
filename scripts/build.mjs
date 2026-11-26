@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {
-  dday, statusOf, ddayLabel, fmtPeriod, fmtDate, escapeHtml, entryTypeOf, prizeTypeOf, winnersOf, announceOf, summarize,
+  dday, statusOf, ddayLabel, fmtPeriod, fmtDate, escapeHtml, entryTypeOf, prizeTypeOf, winnersOf, announceOf, stepsOf, summarize,
 } from '../src/lib.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
@@ -111,7 +111,7 @@ for (const e of events) {
     inLanguage: 'ko-KR',
   }).replace(/</g, '\\u003c');
 
-  const steps = e.steps && e.steps.length ? e.steps : [];
+  const steps = stepsOf(e);
   const html = `${head(`${escapeHtml(e.title)} — ${escapeHtml(e.organizer)} ${escapeHtml(e.type)} | 이벤트픽`, escapeHtml(`${e.organizer} ${e.title} · 마감 ${fmtPeriod(e)} · ${e.prize}`), `${SITE}/e/${e.id}`, ld)}
 <body>
 ${topbar}
