@@ -92,7 +92,13 @@
       </label>
     </div>
 
-    <div class="filter-groups">
+    <button type="button" class="filter-toggle" id="filter-toggle" aria-expanded="false" aria-controls="filter-groups">
+      <span aria-hidden="true">☰</span> <span>필터</span>
+      <b class="filter-badge" id="filter-badge" hidden>0</b>
+      <span class="filter-chev" aria-hidden="true">▾</span>
+    </button>
+
+    <div class="filter-groups" id="filter-groups">
       <div class="fgroup">
         <span class="flabel">주최</span>
         <div class="pills" role="group" aria-label="주최 구분" data-group="category">
@@ -114,6 +120,17 @@
         </div>
       </div>
       <div class="fgroup">
+        <span class="flabel">응모 채널</span>
+        <div class="pills" role="group" aria-label="응모 채널" data-group="channel">
+          <button type="button" class="pill is-on" data-value="전체">전체</button>
+          <button type="button" class="pill" data-value="웹사이트·폼">웹사이트·폼</button>
+          <button type="button" class="pill" data-value="유튜브">유튜브</button>
+          <button type="button" class="pill" data-value="인스타그램">인스타그램</button>
+          <button type="button" class="pill" data-value="블로그">블로그</button>
+          <button type="button" class="pill" data-value="앱·기타">앱·기타</button>
+        </div>
+      </div>
+      <div class="fgroup">
         <span class="flabel">경품 유형</span>
         <div class="pills" role="group" aria-label="경품 유형" data-group="prize">
           <button type="button" class="pill is-on" data-value="전체">전체</button>
@@ -121,6 +138,24 @@
           <button type="button" class="pill" data-value="기프티콘">기프티콘</button>
           <button type="button" class="pill" data-value="현물·전자기기">현물·전자기기</button>
           <button type="button" class="pill" data-value="상금·시상">상금·시상</button>
+        </div>
+      </div>
+      <div class="fgroup">
+        <span class="flabel">당첨 규모</span>
+        <div class="pills" role="group" aria-label="당첨 규모" data-group="scale">
+          <button type="button" class="pill is-on" data-value="전체">전체</button>
+          <button type="button" class="pill" data-value="~30명">소수정예 (~30명)</button>
+          <button type="button" class="pill" data-value="31~99명">31~99명</button>
+          <button type="button" class="pill" data-value="100명+">대량 (100명+)</button>
+        </div>
+      </div>
+      <div class="fgroup">
+        <span class="flabel">참여 난이도</span>
+        <div class="pills" role="group" aria-label="참여 난이도" data-group="difficulty">
+          <button type="button" class="pill is-on" data-value="전체">전체</button>
+          <button type="button" class="pill" data-value="1분 간편">1분 간편</button>
+          <button type="button" class="pill" data-value="퀴즈·설문">퀴즈·설문</button>
+          <button type="button" class="pill" data-value="인증·공모">인증·공모</button>
         </div>
       </div>
       <div class="fgroup">
@@ -145,6 +180,8 @@
     <p id="empty" class="empty" hidden>조건에 맞는 이벤트가 없습니다. 검색어나 필터를 바꿔 보세요.</p>
     <p id="load-error" class="empty" hidden>목록을 불러오지 못했습니다. 잠시 뒤 새로고침해 주세요.</p>
   </section>
+
+  <p id="toast" class="toast" role="status" aria-live="polite" hidden></p>
 </main>
 
 <dialog id="detail" class="modal" aria-labelledby="detail-title">

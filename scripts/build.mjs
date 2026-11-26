@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   dday, statusOf, ddayLabel, fmtPeriod, fmtDate, escapeHtml, entryTypeOf, prizeTypeOf, winnersOf, announceOf, stepsOf, summarize,
+  channelOf, difficultyOf,
 } from '../src/lib.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
@@ -125,6 +126,8 @@ ${topbar}
     <div><span>발표일</span><b>${escapeHtml(announceOf(e) || '원문 공고 확인')}</b></div>
     <div><span>응모 형태</span><b>${escapeHtml(entryTypeOf(e))}</b></div>
     <div><span>경품 유형</span><b>${escapeHtml(prizeTypeOf(e) === '기타' ? '원문 확인' : prizeTypeOf(e))}</b></div>
+    <div><span>응모 채널</span><b>${escapeHtml(channelOf(e))}</b></div>
+    <div><span>참여 난이도</span><b>${escapeHtml(difficultyOf(e))}</b></div>
     <div><span>참여 대상</span><b>${escapeHtml(e.target || '원문 확인')}</b></div>
   </div>
   <section class="prize-box"><h3>경품·시상</h3><p>${escapeHtml(e.prize || '원문 확인')}</p></section>
@@ -133,7 +136,7 @@ ${topbar}
   </section>
   ${e.cautions ? `<section class="caution-box"><h3>유의사항</h3><p>${escapeHtml(e.cautions)}</p></section>` : ''}
   <div class="detail-actions">
-    <a class="btn btn-primary" href="${escapeHtml(e.url)}" target="_blank" rel="noopener noreferrer">주최 공식 원문 열기 ↗</a>
+    <a class="btn btn-primary btn-compact" href="${escapeHtml(e.url)}" target="_blank" rel="noopener noreferrer" aria-label="주최 공식 원문 새 창으로 열기">원문 <span aria-hidden="true">↗</span></a>
   </div>
   <p class="detail-note">경품·일정은 주최 측 사정으로 바뀔 수 있습니다. 응모 전 주최 공식 공고를 다시 확인하세요. 확인 ${escapeHtml(e.verifiedAt || today)} · ${escapeHtml(e.sourceLabel || '공식 페이지')}</p>
 </main>

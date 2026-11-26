@@ -1,10 +1,13 @@
 import {
   filterEvents, sortEvents, hotEvents, summarize, renderCard, renderRow, renderSpot, renderDetail,
-  todayKST,
+  icsFor, todayKST,
 } from '/lib.mjs';
 
 const LS = { theme: 'eventpick.theme.v1', view: 'eventpick.view.v1', saved: 'eventpick.saved.v1', done: 'eventpick.done.v1' };
-const state = { q: '', category: '전체', entry: '전체', prize: '전체', status: '전체', sort: 'deadline', view: 'card' };
+const state = {
+  q: '', category: '전체', entry: '전체', channel: '전체', prize: '전체', scale: '전체', difficulty: '전체',
+  status: '전체', sort: 'deadline', view: 'card',
+};
 let events = [];
 let saved = new Set();
 let done = new Set();
@@ -19,6 +22,71 @@ const dialog = $('#detail');
 const detailBody = $('#detail-body');
 const spotsEl = $('#spots');
 const spotStrip = $('#spot-strip');
+const toastEl = $('#toast');
+const filterToggle = $('#filter-toggle');
+const filterGroups = $('#filter-groups');
+const filterBadge = $('#filter-badge');
+const FILTER_KEYS = ['category', 'entry', 'channel', 'prize', 'scale', 'difficulty', 'status'];
+
+/* ---------- 알림 ---------- */
+let toastTimer;
+function toast(message) {
+  if (!toastEl) return;
+  toastEl.textContent = message;
+  toastEl.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toastEl.hidden = true; }, 3400);
+}
+
+/* ---------- 캘린더 파일 ---------- */
+function downloadIcs(id) {
+  const ev = events.find((x) => x.id === id);
+  if (!ev) return;
+  const text = icsFor(ev);
+  if (!text) { toast('마감일이 없어 일정을 만들 수 없습니다.'); return; }
+  const blob = new Blob([text], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `eventpick-${id}.ics`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+  toast('캘린더 파일(.ics)을 내려받았어요. 열면 마감일과 발표일이 등록됩니다.');
+}
+
+function copyLink(btn) {
+  const url = btn.dataset.copy;
+  const done = () => {
+    const label = btn.innerHTML;
+    btn.innerHTML = '<span aria-hidden="true">✓</span> 복사됨';
+    setTimeout(() => { btn.innerHTML = label; }, 1800);
+    toast('이벤트 링크를 복사했어요.');
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(done, () => fallbackCopy(url, done));
+  } else {
+    fallbackCopy(url, done);
+  }
+}
+
+function fallbackCopy(text, done) {
+  try {
+    const input = document.createElement('textarea');
+    input.value = text;
+    input.setAttribute('readonly', '');
+    input.style.position = 'fixed';
+    input.style.opacity = '0';
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    input.remove();
+    done();
+  } catch (e) {
+    toast('링크를 복사하지 못했습니다. 주소창의 주소를 복사해 주세요.');
+  }
+}
 
 /* ---------- 저장값 ---------- */
 function loadSet(key) {
@@ -79,6 +147,11 @@ function render() {
   cardsEl.innerHTML = filtered.map((ev) => (state.view === 'list' ? renderRow(ev, opts) : renderCard(ev, opts))).join('');
   const mine = state.status === '내 찜·참여완료';
   countEl.innerHTML = `전체 <b>${events.length}</b>건 중 <b>${filtered.length}</b>건 표시${mine ? ` · 찜 ${saved.size} · 참여완료 ${done.size}` : ''}`;
+  const activeFilters = FILTER_KEYS.filter((k) => state[k] !== '전체').length;
+  if (filterBadge) {
+    filterBadge.textContent = String(activeFilters);
+    filterBadge.hidden = activeFilters === 0;
+  }
   emptyEl.hidden = filtered.length !== 0;
   emptyEl.textContent = mine
     ? '아직 찜하거나 참여 완료로 표시한 이벤트가 없습니다. 카드의 ♡·✓ 버튼으로 기록해 두세요.'
@@ -123,14 +196,10 @@ document.addEventListener('click', (e) => {
   if (favBtn) { bump('fav', favBtn.dataset.fav); return; }
   const doneBtn = e.target.closest('[data-done]');
   if (doneBtn) { bump('done', doneBtn.dataset.done); return; }
+  const icsBtn = e.target.closest('[data-ics]');
+  if (icsBtn) { downloadIcs(icsBtn.dataset.ics); return; }
   const copyBtn = e.target.closest('[data-copy]');
-  if (copyBtn) {
-    const url = copyBtn.dataset.copy;
-    const after = () => { copyBtn.textContent = '복사됨'; };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(after, () => {});
-    else after();
-    return;
-  }
+  if (copyBtn) { copyLink(copyBtn); return; }
   if (e.target === dialog) closeDetail();
 });
 
@@ -166,6 +235,13 @@ $('#q').addEventListener('input', (e) => update('q', e.target.value));
 clearQ.addEventListener('click', () => { $('#q').value = ''; update('q', ''); $('#q').focus(); });
 $('#sort').addEventListener('change', (e) => update('sort', e.target.value));
 
+if (filterToggle) {
+  filterToggle.addEventListener('click', () => {
+    const open = filterGroups.classList.toggle('is-open');
+    filterToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+}
+
 document.querySelectorAll('.pills').forEach((group) => {
   group.addEventListener('click', (e) => {
     const btn = e.target.closest('.pill');
@@ -182,7 +258,10 @@ $('#reset').addEventListener('click', () => {
   document.querySelectorAll('.pills').forEach((group) => {
     group.querySelectorAll('.pill').forEach((b) => b.classList.toggle('is-on', b.dataset.value === '전체'));
   });
-  Object.assign(state, { q: '', category: '전체', entry: '전체', prize: '전체', status: '전체', sort: 'deadline' });
+  Object.assign(state, {
+    q: '', category: '전체', entry: '전체', channel: '전체', prize: '전체', scale: '전체', difficulty: '전체',
+    status: '전체', sort: 'deadline',
+  });
   render();
 });
 

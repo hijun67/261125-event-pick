@@ -5,6 +5,9 @@ export const TYPES = ['경품·이벤트', '퀴즈', '공모전'];
 export const ENTRY_TYPES = ['단순응모', '설문·투표', '퀴즈·퍼즐', '댓글·참여인증', '공모·제출'];
 export const PRIZE_TYPES = ['상품권·페이', '기프티콘', '현물·전자기기', '상금·시상'];
 export const STATUS_FILTERS = ['전체', '진행중', '마감임박', '내 찜·참여완료'];
+export const CHANNELS = ['웹사이트·폼', '유튜브', '인스타그램', '블로그', '앱·기타'];
+export const SCALES = ['~30명', '31~99명', '100명+'];
+export const DIFFICULTIES = ['1분 간편', '퀴즈·설문', '인증·공모'];
 export const SORTS = { deadline: '마감임박순', recent: '최신등록순' };
 
 const DAY = 24 * 60 * 60 * 1000;
@@ -94,6 +97,46 @@ export function winnersOf(ev = {}) {
   return m ? `${m[1]}명` : '';
 }
 
+/** 경품·당첨 인원 문구에서 총 당첨자 수를 읽습니다. '총 N명'이 있으면 그 값을, 없으면 표기된 인원을 모두 더합니다. */
+export function winnerCount(ev = {}) {
+  const prize = String(ev.prize || '');
+  const total = prize.match(/총\s*([\d,]{1,7})\s*명/);
+  if (total) return Number(total[1].replace(/,/g, ''));
+  const marks = prize.match(/[\d,]{1,7}\s*명/g) || [];
+  const sum = marks.reduce((acc, m) => acc + Number(m.replace(/[^\d]/g, '')), 0);
+  return sum > 0 ? sum : NaN;
+}
+
+/** 당첨 규모 구간: ~30명 / 31~99명 / 100명+. 인원을 확인할 수 없으면 빈 문자열 */
+export function scaleOf(ev = {}) {
+  const n = winnerCount(ev);
+  if (!Number.isFinite(n)) return '';
+  if (n <= 30) return '~30명';
+  if (n <= 99) return '31~99명';
+  return '100명+';
+}
+
+/** 응모가 이뤄지는 채널. 자료에 channel이 있으면 그 값을 우선합니다. */
+export function channelOf(ev = {}) {
+  if (ev.channel && CHANNELS.includes(ev.channel)) return ev.channel;
+  const text = `${ev.title || ''} ${ev.howTo || ''} ${(ev.steps || []).join(' ')} ${(ev.tags || []).join(' ')}`;
+  if (/유튜브|youtube|채널\s*구독|영상\s*시청/i.test(text)) return '유튜브';
+  if (/블로그|blog|포스팅/i.test(text)) return '블로그';
+  if (/인스타|instagram|해시태그|릴스/i.test(text)) return '인스타그램';
+  if (/앱|어플|애플리케이션|출석|룰렛|QR|전시장|매장|스탬프/i.test(text)) return '앱·기타';
+  return '웹사이트·폼';
+}
+
+/** 참여 난이도: 1분 간편 / 퀴즈·설문 / 인증·공모. 자료에 difficulty가 있으면 그 값을 우선합니다. */
+export function difficultyOf(ev = {}) {
+  if (ev.difficulty && DIFFICULTIES.includes(ev.difficulty)) return ev.difficulty;
+  const text = `${ev.title || ''} ${ev.howTo || ''} ${(ev.steps || []).join(' ')}`;
+  if (/퀴즈|퍼즐|초성|정답|\bOX\b/i.test(text)) return '퀴즈·설문';
+  if (/설문|투표|만족도|의견\s*조사|시민\s*조사/.test(text)) return '퀴즈·설문';
+  if (ev.type === '공모전' || /공모|작품|출품|업로드|제출|영상\s*제작|구매|개통|가입|방문|예약|리뷰|후기|캡처|인증|스탬프/.test(text)) return '인증·공모';
+  return '1분 간편';
+}
+
 /** 저장된 단계가 없으면 응모 방법의 화살표·번호 표기를 단계로 나눕니다. */
 export function stepsOf(ev = {}) {
   if (Array.isArray(ev.steps) && ev.steps.length) return ev.steps.slice(0, 6);
@@ -126,7 +169,10 @@ function haystack(ev) {
 
 export function filterEvents(events, filters = {}, now = new Date()) {
   const q = (filters.q || '').trim().toLowerCase();
-  const { category = '전체', entry = '전체', prize = '전체', status = '전체' } = filters;
+  const {
+    category = '전체', entry = '전체', prize = '전체', status = '전체',
+    channel = '전체', scale = '전체', difficulty = '전체',
+  } = filters;
   const saved = filters.saved instanceof Set ? filters.saved : new Set(filters.saved || []);
   const done = filters.done instanceof Set ? filters.done : new Set(filters.done || []);
   return events.filter((ev) => {
@@ -134,6 +180,9 @@ export function filterEvents(events, filters = {}, now = new Date()) {
     if (category !== '전체' && ev.category !== category) return false;
     if (entry !== '전체' && entryTypeOf(ev) !== entry) return false;
     if (prize !== '전체' && prizeTypeOf(ev) !== prize) return false;
+    if (channel !== '전체' && channelOf(ev) !== channel) return false;
+    if (scale !== '전체' && scaleOf(ev) !== scale) return false;
+    if (difficulty !== '전체' && difficultyOf(ev) !== difficulty) return false;
     if (status === '진행중' && dday(ev.end, now) <= 7) return false;
     if (status === '마감임박' && dday(ev.end, now) > 7) return false;
     if (status === '내 찜·참여완료' && !(saved.has(ev.id) || done.has(ev.id))) return false;
@@ -208,7 +257,7 @@ const acts = (ev, saved, done) => `<div class="card-foot">
     <button type="button" class="icon-btn fav${saved ? ' is-on' : ''}" data-fav="${escapeHtml(ev.id)}" aria-pressed="${saved ? 'true' : 'false'}" title="찜하기" aria-label="찜하기">${saved ? '♥' : '♡'}</button>
     <button type="button" class="icon-btn done${done ? ' is-on' : ''}" data-done="${escapeHtml(ev.id)}" aria-pressed="${done ? 'true' : 'false'}" title="참여 완료" aria-label="참여 완료">✓</button>
     <button type="button" class="btn btn-ghost" data-open="${escapeHtml(ev.id)}">자세히</button>
-    <a class="btn btn-primary" href="${escapeHtml(ev.url)}" target="_blank" rel="noopener noreferrer">공식 원문 ↗</a>
+    <a class="btn btn-primary btn-sm" href="${escapeHtml(ev.url)}" target="_blank" rel="noopener noreferrer" aria-label="주최 공식 원문 열기">원문 ↗</a>
   </div>`;
 
 export function renderCard(ev, opts = {}) {
@@ -285,6 +334,8 @@ export function renderDetail(ev, opts = {}) {
     <div><span>발표일</span><b>${escapeHtml(announce || '원문 공고 확인')}</b></div>
     <div><span>응모 형태</span><b>${escapeHtml(entryTypeOf(ev))}</b></div>
     <div><span>경품 유형</span><b>${escapeHtml(prizeTypeOf(ev) === '기타' ? '원문 확인' : prizeTypeOf(ev))}</b></div>
+    <div><span>응모 채널</span><b>${escapeHtml(channelOf(ev))}</b></div>
+    <div><span>참여 난이도</span><b>${escapeHtml(difficultyOf(ev))}</b></div>
     <div><span>참여 대상</span><b>${escapeHtml(ev.target || '원문 공고 확인')}</b></div>
   </div>
   <section class="prize-box">
@@ -296,14 +347,95 @@ export function renderDetail(ev, opts = {}) {
     ${steps.length ? `<ol class="steps">${steps.map((s) => `<li>${escapeHtml(s)}</li>`).join('')}</ol>` : `<p class="muted-line">${escapeHtml(ev.howTo || '원문 안내를 확인하세요.')}</p>`}
   </section>
   ${ev.cautions ? `<section class="caution-box"><h3>유의사항</h3><p>${escapeHtml(ev.cautions)}</p></section>` : ''}
-  <div class="detail-actions">
-    <a class="btn btn-primary" href="${escapeHtml(ev.url)}" target="_blank" rel="noopener noreferrer">주최 공식 원문 열기 ↗</a>
-    <button type="button" class="btn btn-ghost" data-copy="${escapeHtml(ev.url)}">링크 복사</button>
-  </div>
-  <div class="detail-toggles">
-    <button type="button" class="toggle-btn fav${saved ? ' is-on' : ''}" data-fav="${escapeHtml(ev.id)}" aria-pressed="${saved ? 'true' : 'false'}">${saved ? '♥ 찜함' : '♡ 찜하기'}</button>
-    <button type="button" class="toggle-btn done${done ? ' is-on' : ''}" data-done="${escapeHtml(ev.id)}" aria-pressed="${done ? 'true' : 'false'}">${done ? '✓ 참여 완료' : '참여 완료로 표시'}</button>
+  <div class="detail-actions" role="group" aria-label="이벤트 빠른 실행">
+    <a class="btn btn-primary btn-compact" href="${escapeHtml(ev.url)}" target="_blank" rel="noopener noreferrer" aria-label="주최 공식 원문 새 창으로 열기">원문 <span aria-hidden="true">↗</span></a>
+    <button type="button" class="act-btn" data-ics="${escapeHtml(ev.id)}" title="마감·발표일을 캘린더 파일(.ics)로 저장" aria-label="캘린더 일정 추가"><span aria-hidden="true">📅</span> 일정</button>
+    <button type="button" class="act-btn" data-copy="${escapeHtml(ev.url)}" title="이벤트 링크 복사" aria-label="링크 복사"><span aria-hidden="true">🔗</span> 링크</button>
+    <button type="button" class="act-btn fav${saved ? ' is-on' : ''}" data-fav="${escapeHtml(ev.id)}" aria-pressed="${saved ? 'true' : 'false'}" aria-label="찜하기"><span aria-hidden="true">${saved ? '♥' : '♡'}</span> ${saved ? '찜함' : '찜'}</button>
+    <button type="button" class="act-btn done${done ? ' is-on' : ''}" data-done="${escapeHtml(ev.id)}" aria-pressed="${done ? 'true' : 'false'}" aria-label="참여 완료로 표시"><span aria-hidden="true">✓</span> ${done ? '완료' : '참여'}</button>
   </div>
   <p class="detail-note">${left >= 0 ? `마감까지 ${left}일 · ` : ''}경품·일정은 주최 측 사정으로 바뀔 수 있습니다. 응모 전 주최 공식 공고를 다시 확인하세요. 확인 ${escapeHtml(ev.verifiedAt || '')} · ${escapeHtml(ev.sourceLabel || '공식 페이지')}</p>
 </div>`;
+}
+
+/* ---------- 캘린더(.ics) ---------- */
+function icsEscape(value = '') {
+  return String(value)
+    .replace(/\\/g, '\\\\')
+    .replace(/;/g, '\\;')
+    .replace(/,/g, '\\,')
+    .replace(/\r?\n/g, '\\n');
+}
+
+/** 'YYYY-MM-DD' + 'HH:MM'(KST) → UTC Date. 형식이 틀리면 null */
+function kstToDate(dateStr, timeStr) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateStr || '');
+  if (!m) return null;
+  const [hh, mm] = (/^\d{2}:\d{2}$/.test(timeStr || '') ? timeStr : '09:00').split(':').map(Number);
+  return new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]), hh, mm) - 9 * 60 * 60 * 1000);
+}
+
+const icsTime = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
+
+function foldIcs(line) {
+  if (line.length <= 74) return line;
+  const parts = [line.slice(0, 74)];
+  let rest = line.slice(74);
+  while (rest.length) {
+    parts.push(` ${rest.slice(0, 73)}`);
+    rest = rest.slice(73);
+  }
+  return parts.join('\r\n');
+}
+
+/** 이벤트 하나를 마감일(+발표일) 일정으로 담은 .ics 문자열로 만듭니다. */
+export function icsFor(ev = {}, now = new Date()) {
+  const endTime = /^\d{2}:\d{2}$/.test(ev.endTime || '') ? ev.endTime : '18:00';
+  const start = kstToDate(ev.end, endTime);
+  if (!start) return '';
+  const stamp = icsTime(now);
+  const lines = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//EventPick//event-pick.pages.dev//KO',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'BEGIN:VEVENT',
+    `UID:${ev.id}-deadline@event-pick.pages.dev`,
+    `DTSTAMP:${stamp}`,
+    `DTSTART:${icsTime(start)}`,
+    `DTEND:${icsTime(new Date(start.getTime() + 30 * 60 * 1000))}`,
+    `SUMMARY:${icsEscape(`[마감] ${ev.title || '경품 이벤트'}`)}`,
+    `DESCRIPTION:${icsEscape([
+      `${ev.organizer || ''} · ${ev.category || ''}`.trim(),
+      `응모 마감 ${fmtDate(ev.end)} ${endTime}`,
+      `경품 ${ev.prize || '원문 확인'}`,
+      `원문 ${ev.url || ''}`,
+    ].join('\n'))}`,
+    `URL:${ev.url || ''}`,
+    'BEGIN:VALARM',
+    'TRIGGER:-PT2H',
+    'ACTION:DISPLAY',
+    `DESCRIPTION:${icsEscape(`${ev.title || '이벤트'} 마감 2시간 전`)}`,
+    'END:VALARM',
+    'END:VEVENT',
+  ];
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(ev.announceDate || '')) {
+    const aStart = kstToDate(ev.announceDate, '10:00');
+    lines.push(
+      'BEGIN:VEVENT',
+      `UID:${ev.id}-announce@event-pick.pages.dev`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART:${icsTime(aStart)}`,
+      `DTEND:${icsTime(new Date(aStart.getTime() + 30 * 60 * 1000))}`,
+      `SUMMARY:${icsEscape(`[당첨 발표] ${ev.title || '경품 이벤트'}`)}`,
+      `DESCRIPTION:${icsEscape(`${ev.organizer || ''} 당첨자 발표일 · 원문 ${ev.url || ''}`)}`,
+      `URL:${ev.url || ''}`,
+      'END:VEVENT',
+    );
+  }
+
+  lines.push('END:VCALENDAR');
+  return `${lines.map(foldIcs).join('\r\n')}\r\n`;
 }

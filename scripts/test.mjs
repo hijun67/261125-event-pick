@@ -6,6 +6,7 @@ import { execFileSync } from 'node:child_process';
 import {
   dday, statusOf, ddayLabel, filterEvents, sortEvents, hotEvents, summarize, renderCard, renderRow, renderSpot, renderDetail,
   entryTypeOf, prizeTypeOf, winnersOf, announceOf, todayKST, escapeHtml, fmtDate, ENTRY_TYPES, PRIZE_TYPES,
+  channelOf, difficultyOf, scaleOf, winnerCount, icsFor, CHANNELS, SCALES, DIFFICULTIES,
 } from '../src/lib.mjs';
 import { parseSeoulEvent, parseMediahub, parseModu, parseTouredu, seoulJsonLd, enrichSeoul, tidySteps, looseDate, classify } from './collect.mjs';
 
@@ -47,11 +48,22 @@ ok('단계별 응모 방법(2단계 이상) 항목 존재', data.filter((e) => (
 ok('유의사항이 있는 항목 존재', data.filter((e) => e.cautions).length >= 3, `${data.filter((e) => e.cautions).length}건`);
 ok('응모 형태 4종 이상 등장', new Set(data.map(entryTypeOf)).size >= 4, [...new Set(data.map(entryTypeOf))].join(', '));
 ok('경품 유형 4종 모두 등장', PRIZE_TYPES.every((t) => data.some((e) => prizeTypeOf(e) === t)), JSON.stringify(PRIZE_TYPES.map((t) => [t, data.filter((e) => prizeTypeOf(e) === t).length])));
+const corpEvents = data.filter((e) => e.category === '기업');
+ok('기업 이벤트 18건 이상', corpEvents.length >= 18, `${corpEvents.length}건`);
+const corpNew = corpEvents.filter((e) => ['LG유플러스', 'SK텔레콤', 'KT', '현대자동차', '이마트', 'CJ올리브영', '무신사', '스타벅스 코리아'].includes(e.organizer));
+ok('기업 신규 주최 7곳 이상', new Set(corpNew.map((e) => e.organizer)).size >= 7, [...new Set(corpNew.map((e) => e.organizer))].join(', '));
+ok('기업 이벤트는 마감일·경품·응모방법 모두 채움', corpEvents.every((e) => e.end && e.prize && e.howTo && e.url));
+ok('기업 이벤트 URL이 주최 도메인', corpEvents.every((e) => {
+  try { return !/(eventhouse|suto\.co|pickupcal|modupay|freeticket|contestkorea|moadeuk|getggulggeok|rewardrank)/i.test(new URL(e.url).hostname); } catch (err) { return false; }
+}), corpEvents.map((e) => new URL(e.url).hostname).filter((h) => /(eventhouse|suto|pickupcal|modupay|freeticket|contestkorea|moadeuk|getggulggeok|rewardrank)/i.test(h)).join(','));
+ok('응모 채널 5종 모두 등장', CHANNELS.every((c) => data.some((e) => channelOf(e) === c)), JSON.stringify(CHANNELS.map((c) => [c, data.filter((e) => channelOf(e) === c).length])));
+ok('참여 난이도 3종 모두 등장', DIFFICULTIES.every((d) => data.some((e) => difficultyOf(e) === d)), JSON.stringify(DIFFICULTIES.map((d) => [d, data.filter((e) => difficultyOf(e) === d).length])));
+ok('당첨 규모 3구간 모두 등장', SCALES.every((s) => data.some((e) => scaleOf(e) === s)), JSON.stringify(SCALES.map((s) => [s, data.filter((e) => scaleOf(e) === s).length])));
 
 /* 이벤트하우스(중계) 완전 제거 */
 const rawData = fs.readFileSync(path.join(ROOT, 'data/events.json'), 'utf8');
 ok('데이터에 eventhouse 문자열 0건', !/eventhouse/i.test(rawData));
-ok('데이터에 중계 사이트 링크 없음', !/(eventhouse|링커리어|씽굿|위비티|공모전닷컴|대학내일)/i.test(rawData));
+ok('데이터에 중계 사이트 링크 없음', !/(eventhouse|링커리어|씽굿|위비티|공모전닷컴|대학내일|suto\.co|pickupcal|modupay|freeticket|contestkorea|moadeuk|getggulggeok|rewardrank)/i.test(rawData));
 const sourcesText = fs.readFileSync(path.join(ROOT, 'sources.json'), 'utf8');
 ok('sources.json에 eventhouse 없음', !/eventhouse/i.test(sourcesText));
 ok('sources.json 소스 4개 이상', JSON.parse(sourcesText).sources.length >= 4);
@@ -142,6 +154,14 @@ ok('마감임박 필터(D-7)', filterEvents(sample, { status: '마감임박' }, 
 ok('진행중 필터는 마감임박 제외', filterEvents(sample, { status: '진행중' }, fixed).map((e) => e.id).join('') === 'cd');
 ok('내 찜 필터', filterEvents(sample, { status: '내 찜·참여완료', saved: new Set(['b']) }, fixed).map((e) => e.id).join('') === 'b');
 ok('내 참여완료 필터', filterEvents(sample, { status: '내 찜·참여완료', done: new Set(['c']) }, fixed).map((e) => e.id).join('') === 'c');
+ok('응모 채널 필터: 앱·기타', filterEvents(sample, { channel: '앱·기타' }, fixed).map((e) => e.id).join('') === 'c');
+ok('응모 채널 필터: 웹사이트·폼', filterEvents(sample, { channel: '웹사이트·폼' }, fixed).map((e) => e.id).join('') === 'abd');
+ok('응모 채널 지정값 우선', channelOf({ ...sample[0], channel: '유튜브' }) === '유튜브' && channelOf({ ...sample[1], howTo: '유튜브 구독 후 댓글' }) === '유튜브');
+ok('참여 난이도 필터: 퀴즈·설문', filterEvents(sample, { difficulty: '퀴즈·설문' }, fixed).map((e) => e.id).join('') === 'a');
+ok('참여 난이도 판정', difficultyOf(sample[1]) === '인증·공모' && difficultyOf(sample[2]) === '1분 간편' && difficultyOf(sample[0]) === '퀴즈·설문');
+ok('당첨 규모 필터: ~30명', filterEvents(sample, { scale: '~30명' }, fixed).map((e) => e.id).join('') === 'ac');
+ok('당첨 규모 계산', winnerCount({ prize: '총 150명 — 방청권 1인 1장 (추첨 140명)' }) === 150 && scaleOf({ prize: '3명' }) === '~30명' && scaleOf({ prize: '총 500명' }) === '100명+' && scaleOf({ prize: '상금 300만원' }) === '');
+ok('필터 조합: 기업+1분 간편', filterEvents(sample, { category: '기업', difficulty: '1분 간편' }, fixed).map((e) => e.id).join('') === 'c');
 ok('마감임박순 정렬', sortEvents(sample, 'deadline').map((e) => e.id).join('') === 'badc');
 ok('최신등록순 정렬', sortEvents(sample, 'recent').map((e) => e.id).join('') === 'cabd');
 ok('지난 이벤트는 목록에서 제외', filterEvents([{ ...sample[1], end: '2026-11-20' }], {}, fixed).length === 0);
@@ -164,7 +184,14 @@ const spot = renderSpot(sample[1], fixed);
 ok('하이라이트 카드', spot.includes('class="spot') && spot.includes('서울 숏폼 공모전') && spot.includes('data-open="b"'));
 const detail = renderDetail(sample[0], { now: fixed });
 ok('상세: 기간·경품·단계·발표일·당첨 인원', detail.includes('2026.12.2') && detail.includes('온누리상품권 5만원') && detail.includes('<ol class="steps">') && detail.includes('2026.12.10') && detail.includes('4명'));
-ok('상세: 공식 원문 버튼', detail.includes('주최 공식 원문 열기') && detail.includes('href="https://example.go.kr/a"'));
+ok('상세: 컴팩트 원문 버튼', detail.includes('btn-compact') && detail.includes('원문 <span') && detail.includes('href="https://example.go.kr/a"'));
+ok('상세: 일정·링크·찜·참여 버튼 한 줄 배치', detail.includes('data-ics="a"') && detail.includes('data-copy="https://example.go.kr/a"') && detail.includes('data-fav="a"') && detail.includes('data-done="a"') && (detail.match(/class="detail-actions"/g) || []).length === 1 && !detail.includes('detail-toggles'));
+ok('상세: 응모 채널·참여 난이도 표기', detail.includes('응모 채널') && detail.includes('참여 난이도'));
+const ics = icsFor(sample[0], fixed);
+ok('ICS: VCALENDAR·마감 일정', ics.startsWith('BEGIN:VCALENDAR') && ics.includes('SUMMARY:[마감] 모두의 광장 개편 퀴즈 이벤트') && ics.includes('DTSTART:20261202T090000Z') && ics.includes('URL:https://example.go.kr/a'));
+ok('ICS: 발표일 일정 포함', ics.includes('SUMMARY:[당첨 발표] 모두의 광장 개편 퀴즈 이벤트') && ics.includes('DTSTART:20261210T010000Z'));
+ok('ICS: 줄바꿈 CRLF·종료 태그', ics.includes('\r\n') && ics.trimEnd().endsWith('END:VCALENDAR'));
+ok('ICS: 마감일 없으면 빈 문자열', icsFor({ id: 'x', title: 'T' }, fixed) === '');
 ok('상세: 발표일 없으면 원문 공고 안내', renderDetail(sample[2], { now: fixed }).includes('원문 공고 확인'));
 ok('HTML 이스케이프', escapeHtml('<b>"x"</b>') === '&lt;b&gt;&quot;x&quot;&lt;/b&gt;');
 ok('날짜 표기', fmtDate('2026-12-06') === '2026.12.6');
@@ -186,6 +213,11 @@ ok('목록에 주최 필터 4개', (indexHtml.match(/data-group="category"[\s\S]
 ok('목록에 응모 형태 필터 6개', (indexHtml.match(/data-group="entry"[\s\S]*?<\/div>/)[0].match(/data-value=/g) || []).length === 6);
 ok('목록에 경품 유형 필터 5개', (indexHtml.match(/data-group="prize"[\s\S]*?<\/div>/)[0].match(/data-value=/g) || []).length === 5);
 ok('목록에 상태 필터 4개(내 찜·참여완료 포함)', (indexHtml.match(/data-group="status"[\s\S]*?<\/div>/)[0].match(/data-value=/g) || []).length === 4 && indexHtml.includes('내 찜·참여완료'));
+ok('목록에 응모 채널 필터 6개', (indexHtml.match(/data-group="channel"[\s\S]*?<\/div>/)[0].match(/data-value=/g) || []).length === 6);
+ok('목록에 당첨 규모 필터 4개', (indexHtml.match(/data-group="scale"[\s\S]*?<\/div>/)[0].match(/data-value=/g) || []).length === 4);
+ok('목록에 참여 난이도 필터 4개', (indexHtml.match(/data-group="difficulty"[\s\S]*?<\/div>/)[0].match(/data-value=/g) || []).length === 4);
+ok('목록에 토스트 알림 영역', indexHtml.includes('id="toast"'));
+ok('목록에 모바일 필터 접기 버튼', indexHtml.includes('id="filter-toggle"') && indexHtml.includes('id="filter-groups"') && indexHtml.includes('id="filter-badge"'));
 ok('목록에 정렬 선택', indexHtml.includes('id="sort"') && indexHtml.includes('마감임박순') && indexHtml.includes('최신등록순'));
 ok('목록에 보기 전환·테마 토글', indexHtml.includes('data-view="list"') && indexHtml.includes('id="theme-toggle"'));
 ok('목록에 D-3 하이라이트 영역', indexHtml.includes('id="spot-strip"') && indexHtml.includes('3일 안에 마감'));
@@ -206,7 +238,7 @@ const detailFiles = fs.readdirSync(path.join(pub, 'e'));
 ok('상세 페이지 수 일치', detailFiles.length === data.length, `${detailFiles.length}개`);
 const oneDetail = fs.readFileSync(path.join(pub, 'e', `${data[0].id}.html`), 'utf8');
 ok('상세 페이지에 JSON-LD Event', oneDetail.includes('"@type":"Event"'));
-ok('상세 페이지에 공식 원문 링크', oneDetail.includes(escapeHtml(data[0].url)));
+ok('상세 페이지에 공식 원문 링크', oneDetail.includes(escapeHtml(data[0].url)) && oneDetail.includes('btn-compact'));
 ok('상세 페이지에 구조화 정보(당첨 인원·발표일)', oneDetail.includes('당첨 인원') && oneDetail.includes('발표일'));
 
 console.log(`\n결과: ${pass}개 통과, ${fails.length}개 실패`);
