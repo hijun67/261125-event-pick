@@ -1,26 +1,28 @@
 {
-  "_설명": "자동 수집 대상 소스 목록입니다. `kind`에 맞는 파서로 목록을 읽어 제목·주최·기간·경품을 뽑고 data/events.json에 병합합니다. 직접 검증해 넣은 항목(curated)은 자동 수집이 덮어쓰지 않습니다.",
-  "updatedAt": "2026-11-25",
+  "_설명": "자동 수집 대상은 주최 기관·기업이 직접 운영하는 공식 페이지만 씁니다. 중계·목록 사이트는 넣지 않습니다. `kind`에 맞는 파서가 목록을 읽고, `detail`이 true인 소스는 항목별 상세 페이지까지 읽어 발표일·당첨 인원·단계별 응모 방법을 채웁니다. 직접 확인해 넣은 항목(curated)은 자동 수집이 덮어쓰지 않습니다.",
+  "updatedAt": "2026-11-26",
   "sources": [
     {
-      "id": "eventhouse-website",
-      "name": "이벤트하우스 웹사이트 경품이벤트",
-      "kind": "eventhouse",
-      "url": "https://www.eventhouse.kr/site/website.php?page=1&requ_M=11&requ_Y=2026",
-      "category": "공공기관",
+      "id": "seoul-event",
+      "name": "서울시 내 손안에 서울 이벤트",
+      "kind": "seoulEvent",
+      "url": "https://mediahub.seoul.go.kr/event/eventList.do",
+      "category": "정부·지자체",
       "type": "경품·이벤트",
-      "note": "공공기관·지자체·기업이 자기 누리집에서 여는 설문·투표·퀴즈 경품 이벤트를 모아 주최·경품·기간을 정리한 목록. 원문 응모 주소는 로그인 후에만 열려, 수집 항목은 이 목록 페이지로 연결합니다.",
-      "limit": 14
+      "detail": true,
+      "limit": 20,
+      "note": "서울특별시와 산하 기관이 직접 여는 시민 참여 이벤트. 목록에서 기간을, 상세 페이지에서 주최·결과발표일·참여대상·공식 응모 누리집을 읽습니다."
     },
     {
-      "id": "mediahub-seoul-contest",
+      "id": "seoul-contest",
       "name": "서울시 내 손안에 서울 공모전",
       "kind": "mediahub",
       "url": "https://mediahub.seoul.go.kr/competition/competitionList.do",
       "category": "정부·지자체",
       "type": "공모전",
-      "note": "서울특별시가 직접 공고하는 공모전 목록. 항목별 상세 공고(/gongmo/{번호})로 바로 연결됩니다.",
-      "limit": 10
+      "detail": true,
+      "limit": 12,
+      "note": "서울특별시가 직접 공고하는 공모전. 상세 공고(/gongmo/{번호})에서 결과발표일과 공식 접수처를 읽습니다."
     },
     {
       "id": "modu-square-survey",
@@ -29,8 +31,8 @@
       "url": "https://modu.go.kr/front/qustnrNew/qustnrNewList.do",
       "category": "정부·지자체",
       "type": "경품·이벤트",
-      "note": "정부 부처·지자체가 소통24(모두의 광장)에 올리는 국민 설문·투표. 경품 유무는 항목마다 달라 '원문 확인'으로 표시합니다.",
-      "limit": 6
+      "limit": 8,
+      "note": "정부 부처·지자체가 소통24(모두의 광장)에 올리는 국민 설문·투표 중 경품성 이벤트만. 경품 유무는 항목마다 달라 원문 확인으로 표시합니다."
     },
     {
       "id": "touredu-kto-event",
@@ -39,8 +41,8 @@
       "url": "https://touredu.visitkorea.or.kr/home/support/promotions/prgs/",
       "category": "공공기관",
       "type": "경품·이벤트",
-      "note": "한국관광공사 관광e배움터가 여는 수강·수료 이벤트.",
-      "limit": 4
+      "limit": 6,
+      "note": "한국관광공사 관광e배움터가 여는 수강·수료 이벤트."
     }
   ]
 }

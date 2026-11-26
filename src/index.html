@@ -1,86 +1,150 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" data-theme="light">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>이벤트픽 — 정부·공공기관·기업 경품 이벤트·공모전 모음</title>
-<meta name="description" content="2026년 11월 25일 기준으로 직접 확인한 정부·지자체·공공기관·기업의 경품 이벤트, 퀴즈, 공모전을 마감일·경품·참여 방법과 함께 모았습니다. 키워드 검색과 주최·유형·마감임박 필터로 찾아보세요." />
-<meta name="theme-color" content="#1f2a5a" />
+<title>이벤트픽 — 정부·공공기관·기업 공식 경품 이벤트·공모전</title>
+<meta name="description" content="{{COUNT}}건의 정부·지자체·공공기관·기업 공식 경품 이벤트·퀴즈·공모전을 마감 D-day, 당첨 인원, 발표일, 단계별 응모 방법과 함께 모았습니다. 모든 항목은 주최 공식 응모 페이지로 바로 연결됩니다." />
+<meta name="theme-color" content="#f4f1ea" />
 <link rel="canonical" href="{{SITE_URL}}/" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="이벤트픽 — 정부·공공기관·기업 경품 이벤트·공모전 모음" />
-<meta property="og:description" content="직접 확인한 경품 이벤트·퀴즈·공모전을 마감 D-day와 경품 내역으로 한눈에." />
+<meta property="og:title" content="이벤트픽 — 공식 원문으로 직행하는 경품·공모전 보드" />
+<meta property="og:description" content="중계 사이트 없이 주최 공식 페이지만. 마감 D-day·당첨 인원·발표일·응모 단계까지 한 화면에." />
 <meta property="og:url" content="{{SITE_URL}}/" />
+<meta property="og:site_name" content="이벤트픽" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="preload" href="/style.css" as="style" />
 <link rel="stylesheet" href="/style.css" />
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('eventpick.theme.v1');
+      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+      var v = localStorage.getItem('eventpick.view.v1');
+      if (v === 'list' || v === 'card') document.documentElement.setAttribute('data-view', v);
+    } catch (e) {}
+  })();
+</script>
 <script type="application/ld+json">{{JSONLD}}</script>
 </head>
 <body>
 <a class="skip" href="#list">목록으로 바로가기</a>
-<header class="site-head">
-  <div class="head-inner">
-    <div class="brand">
-      <span class="brand-mark" aria-hidden="true">🎁</span>
-      <div>
-        <h1>이벤트픽</h1>
-        <p class="tagline">정부·공공기관·기업의 경품 이벤트 · 퀴즈 · 공모전 모음</p>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true">🎯</span>
+      <span class="brand-name">이벤트픽</span>
+      <span class="brand-sub">공식 원문 직행</span>
+    </a>
+    <div class="top-actions">
+      <div class="view-toggle" role="group" aria-label="보기 방식">
+        <button type="button" class="vt-btn is-on" data-view="card" aria-pressed="true" title="카드 보기"><span aria-hidden="true">▦</span> 카드</button>
+        <button type="button" class="vt-btn" data-view="list" aria-pressed="false" title="리스트 보기"><span aria-hidden="true">☰</span> 리스트</button>
       </div>
-    </div>
-    <div class="head-stats" id="head-stats">
-      <span><strong>{{COUNT}}</strong>건 수록</span>
-      <span><strong>{{SOON}}</strong>건 마감임박</span>
-      <span class="muted">확인일 {{UPDATED}}</span>
+      <button type="button" class="theme-btn" id="theme-toggle" aria-pressed="false" aria-label="다크 모드로 전환"><span class="theme-icon" aria-hidden="true">🌙</span><span class="theme-text">다크</span></button>
     </div>
   </div>
 </header>
 
-<div class="search-wrap">
-  <div class="search-inner">
-    <label class="sr-only" for="q">키워드 검색</label>
-    <div class="search-box">
-      <span class="search-icon" aria-hidden="true">🔍</span>
-      <input id="q" type="search" placeholder="제목·주최·경품·태그로 검색 (예: 상품권, 공모전, 서울)" autocomplete="off" />
-      <button type="button" class="clear-btn" id="clear-q" aria-label="검색어 지우기" hidden>✕</button>
+<main class="page">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow">중계 사이트 없이 · 주최 공식 페이지만</p>
+      <h1 id="hero-title">마감 전에,<br /><em>딱 맞는 이벤트</em>만.</h1>
+      <p class="hero-desc">정부·지자체·공공기관·기업이 직접 공고한 경품·퀴즈·공모전을 모아, 당첨 인원·발표일·단계별 응모 방법까지 한 화면에 정리했습니다. 응모는 언제나 주최 공식 페이지에서.</p>
+      <ul class="hero-points">
+        <li>공식 원문 직행</li>
+        <li>D-day 카운트</li>
+        <li>찜·참여 완료 기록</li>
+      </ul>
     </div>
-    <div class="control-row">
-      <div class="seg" role="group" aria-label="주최 구분">
-        <button type="button" class="seg-btn is-on" data-category="전체">전체</button>
-        <button type="button" class="seg-btn" data-category="정부·지자체">정부·지자체</button>
-        <button type="button" class="seg-btn" data-category="공공기관">공공기관</button>
-        <button type="button" class="seg-btn" data-category="기업">기업</button>
+    <div class="hero-stats" id="hero-stats">
+      <div class="stat"><b>{{COUNT}}</b><span>진행 중 이벤트</span></div>
+      <div class="stat stat-hot"><b>{{SOON}}</b><span>7일 내 마감</span></div>
+      <div class="stat"><b>{{CONTESTS}}</b><span>공모전</span></div>
+      <div class="stat"><b>{{CORP}}</b><span>기업 이벤트</span></div>
+      <p class="stat-foot">확인일 {{UPDATED}}</p>
+    </div>
+  </section>
+
+  <section class="spot-strip" id="spot-strip" aria-labelledby="spot-title" hidden>
+    <div class="strip-head">
+      <h2 id="spot-title"><span aria-hidden="true">⚡</span> 3일 안에 마감</h2>
+      <p class="strip-note">놓치면 다음 기회는 없어요</p>
+    </div>
+    <div class="spots" id="spots"></div>
+  </section>
+
+  <section class="filters" aria-label="검색과 필터">
+    <div class="search-row">
+      <label class="sr-only" for="q">키워드 검색</label>
+      <div class="search-box">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input id="q" type="search" placeholder="제목·주최·경품·단계로 검색 (예: 상품권, 서울, 초성퀴즈)" autocomplete="off" />
+        <button type="button" class="clear-btn" id="clear-q" aria-label="검색어 지우기" hidden>✕</button>
       </div>
-      <div class="seg" role="group" aria-label="유형">
-        <button type="button" class="seg-btn is-on" data-type="전체">전체 유형</button>
-        <button type="button" class="seg-btn" data-type="경품·이벤트">경품·이벤트</button>
-        <button type="button" class="seg-btn" data-type="퀴즈">퀴즈</button>
-        <button type="button" class="seg-btn" data-type="공모전">공모전</button>
+      <label class="sort-label" for="sort">정렬
+        <select id="sort">
+          <option value="deadline" selected>마감임박순</option>
+          <option value="recent">최신등록순</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="filter-groups">
+      <div class="fgroup">
+        <span class="flabel">주최</span>
+        <div class="pills" role="group" aria-label="주최 구분" data-group="category">
+          <button type="button" class="pill is-on" data-value="전체">전체</button>
+          <button type="button" class="pill" data-value="정부·지자체">정부·지자체</button>
+          <button type="button" class="pill" data-value="공공기관">공공기관</button>
+          <button type="button" class="pill" data-value="기업">기업</button>
+        </div>
       </div>
-      <div class="selects">
-        <label class="select-label">상태
-          <select id="status">
-            <option value="전체" selected>전체</option>
-            <option value="진행중">진행중</option>
-            <option value="마감임박">마감임박 (D-7 이내)</option>
-          </select>
-        </label>
-        <label class="select-label">정렬
-          <select id="sort">
-            <option value="deadline" selected>마감임박순</option>
-            <option value="recent">최신등록순</option>
-          </select>
-        </label>
+      <div class="fgroup">
+        <span class="flabel">응모 형태</span>
+        <div class="pills" role="group" aria-label="응모 형태" data-group="entry">
+          <button type="button" class="pill is-on" data-value="전체">전체</button>
+          <button type="button" class="pill" data-value="단순응모">단순응모</button>
+          <button type="button" class="pill" data-value="설문·투표">설문·투표</button>
+          <button type="button" class="pill" data-value="퀴즈·퍼즐">퀴즈·퍼즐</button>
+          <button type="button" class="pill" data-value="댓글·참여인증">댓글·참여인증</button>
+          <button type="button" class="pill" data-value="공모·제출">공모·제출</button>
+        </div>
+      </div>
+      <div class="fgroup">
+        <span class="flabel">경품 유형</span>
+        <div class="pills" role="group" aria-label="경품 유형" data-group="prize">
+          <button type="button" class="pill is-on" data-value="전체">전체</button>
+          <button type="button" class="pill" data-value="상품권·페이">상품권·페이</button>
+          <button type="button" class="pill" data-value="기프티콘">기프티콘</button>
+          <button type="button" class="pill" data-value="현물·전자기기">현물·전자기기</button>
+          <button type="button" class="pill" data-value="상금·시상">상금·시상</button>
+        </div>
+      </div>
+      <div class="fgroup">
+        <span class="flabel">상태</span>
+        <div class="pills" role="group" aria-label="상태" data-group="status">
+          <button type="button" class="pill is-on" data-value="전체">전체</button>
+          <button type="button" class="pill" data-value="진행중">진행중</button>
+          <button type="button" class="pill" data-value="마감임박">마감임박 D-7</button>
+          <button type="button" class="pill" data-value="내 찜·참여완료"><span aria-hidden="true">♥</span> 내 찜·참여완료</button>
+        </div>
       </div>
     </div>
+
     <div class="result-row">
       <p id="result-count" aria-live="polite">불러오는 중…</p>
       <button type="button" class="reset-btn" id="reset">필터 초기화</button>
     </div>
-  </div>
-</div>
+  </section>
 
-<main id="list" class="list-wrap">
-  <div id="cards" class="cards"></div>
-  <p id="empty" class="empty" hidden>조건에 맞는 이벤트가 없습니다. 검색어나 필터를 바꿔 보세요.</p>
-  <p id="load-error" class="empty" hidden>목록을 불러오지 못했습니다. 잠시 뒤 새로 고침해 주세요.</p>
+  <section id="list" class="board" aria-label="이벤트 목록">
+    <div id="cards" class="cards"></div>
+    <p id="empty" class="empty" hidden>조건에 맞는 이벤트가 없습니다. 검색어나 필터를 바꿔 보세요.</p>
+    <p id="load-error" class="empty" hidden>목록을 불러오지 못했습니다. 잠시 뒤 새로고침해 주세요.</p>
+  </section>
 </main>
 
 <dialog id="detail" class="modal" aria-labelledby="detail-title">
@@ -90,8 +154,12 @@
 
 <footer class="site-foot">
   <div class="foot-inner">
-    <p><strong>어떻게 모았나</strong> — 각 기관·기업의 공식 공고 페이지를 직접 열어 제목·주최·마감일·경품·참여 방법을 확인하고, 확인일을 남겼습니다. 확인하지 못한 항목은 넣지 않았습니다.</p>
-    <p><strong>알아 두세요</strong> — 경품과 일정은 주최 측 사정으로 바뀔 수 있습니다. 응모·제출은 언제나 원문 페이지에서 직접 하시고, 개인정보 제공 조건과 참가 자격을 먼저 확인하세요. 이 사이트는 응모를 대신하지 않습니다.</p>
+    <div class="foot-brand">
+      <span class="brand-mark" aria-hidden="true">🎯</span>
+      <div><b>이벤트픽</b><span class="muted">공식 원문으로 직행하는 이벤트 보드</span></div>
+    </div>
+    <p><strong>어떻게 모았나</strong> — 주최 기관·기업의 공식 누리집과 공고만 읽습니다. 서울시 <em>내 손안에 서울</em>(이벤트·공모전), 행정안전부 <em>모두의 광장</em>, 한국관광공사 <em>관광e배움터</em>는 자동 수집하고, 기업 이벤트는 공식 페이지를 직접 열어 확인합니다. 중계·목록 사이트는 쓰지 않습니다.</p>
+    <p><strong>알아 두세요</strong> — 경품과 일정은 주최 측 사정으로 바뀔 수 있습니다. 응모·제출은 언제나 주최 공식 페이지에서 직접 하고, 개인정보 제공 조건과 참가 자격을 먼저 확인하세요. 이 사이트는 응모를 대신하지 않습니다.</p>
     <p class="muted">수록 {{COUNT}}건 · 마지막 확인 {{UPDATED}} · <a href="/about">소개·수집 원칙</a></p>
   </div>
 </footer>
