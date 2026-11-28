@@ -1,193 +1,23 @@
 {
- "updatedAt": "2026-11-26",
- "basisDate": "2026-11-26",
- "count": 44,
+ "updatedAt": "2026-11-28",
+ "basisDate": "2026-11-28",
+ "count": 39,
  "summary": {
-  "total": 44,
-  "soon": 21,
-  "gov": 12,
+  "total": 39,
+  "soon": 19,
+  "gov": 8,
   "publicOrg": 13,
-  "corp": 19,
-  "contest": 9,
+  "corp": 18,
+  "contest": 7,
   "byPrize": {
-   "상품권·페이": 14,
+   "상품권·페이": 12,
    "기프티콘": 8,
-   "현물·전자기기": 3,
-   "상금·시상": 8,
-   "기타": 11
+   "현물·전자기기": 2,
+   "상금·시상": 7,
+   "기타": 10
   }
  },
  "events": [
-  {
-   "id": "seoul-introduce-seoul-shortform-2026",
-   "title": "2026 내가 소개하는 서울 숏폼 공모전",
-   "organizer": "서울특별시",
-   "category": "정부·지자체",
-   "type": "공모전",
-   "start": "2026-11-09",
-   "end": "2026-11-27",
-   "endTime": "17:00",
-   "prize": "총 1,000만원 / 11편 — 대상 300만원, 최우수상 2편 각 150만원, 우수상 8편 각 50만원 (서울특별시장상)",
-   "howTo": "60초 이내 숏폼 영상(MP4, 가로 1920×1080 이상 또는 세로 1080×1920 이상)과 신청서·청렴서약서·대본을 구글폼으로 제출",
-   "url": "https://mediahub.seoul.go.kr/gongmo/2000791",
-   "tags": [
-    "숏폼",
-    "영상",
-    "서울",
-    "AI활용가능"
-   ],
-   "note": "국내 거주 내외국인 누구나. 최종 수상작 발표 2026-12-14 예정.",
-   "verifiedAt": "2026-11-25",
-   "addedAt": "2026-11-25T08:42:30+09:00",
-   "sourceLabel": "내 손안에 서울 공모전 공고",
-   "source": "공식 확인",
-   "announceDate": "",
-   "announceNote": "12월 중(추후 공지 예정)",
-   "cautions": "",
-   "target": "",
-   "steps": [],
-   "winners": "",
-   "entryType": "공모·제출",
-   "prizeType": "상금·시상",
-   "dday": 1,
-   "status": "마감임박"
-  },
-  {
-   "id": "mois-earthquake-safety-quiz-2026-11",
-   "title": "2026 지진안전 누리집 11월 퀴즈 이벤트",
-   "organizer": "행정안전부",
-   "category": "정부·지자체",
-   "type": "퀴즈",
-   "start": "2026-11-16",
-   "end": "2026-11-27",
-   "endTime": "",
-   "prize": "모바일 상품권 5,000원 (30명)",
-   "howTo": "지진안전 누리집(www.지진안전.com) 이벤트 게시글 → 구글폼에서 지진해일 행동요령 OX 정답과 참여자 정보 제출",
-   "url": "https://www.xn--le5b23c9wbqa.com/communication/event.php?code=event02&idx=5364&ptype=view",
-   "tags": [
-    "퀴즈",
-    "OX퀴즈",
-    "지진",
-    "안전"
-   ],
-   "note": "당첨자 발표 2026-12-04, 지진안전 누리집 공지.",
-   "verifiedAt": "2026-11-25",
-   "addedAt": "2026-11-25T08:41:00+09:00",
-   "sourceLabel": "지진안전 누리집 공식 이벤트",
-   "source": "공식 확인",
-   "announceDate": "2026-12-04",
-   "announceNote": "",
-   "cautions": "당첨자는 지진안전 누리집 이벤트 게시판에서 확인. 경품은 부정 당첨자 검증 완료 후 발송.",
-   "target": "",
-   "steps": [],
-   "winners": "30명",
-   "entryType": "퀴즈·퍼즐",
-   "prizeType": "상품권·페이",
-   "dday": 1,
-   "status": "마감임박"
-  },
-  {
-   "id": "miryang-quiz-2026",
-   "title": "2026년 밀양시 대표누리집 퀴즈 이벤트",
-   "organizer": "밀양시",
-   "category": "정부·지자체",
-   "type": "퀴즈",
-   "start": "2026-11-16",
-   "end": "2026-11-27",
-   "endTime": "23:59",
-   "prize": "밀양 얼음골사과 5kg 25명 · 얼음골쌀 10kg 30명 · 대추 선물세트 30명 · 밀양한천 명품 양갱 30명 (총 115명)",
-   "howTo": "밀양시 누리집 이벤트 페이지에서 관광 퀴즈 3문항 + 설문 2문항 응답 후 정답과 배송 정보 입력",
-   "url": "https://www.miryang.go.kr/data/popup/20261117/popup.html",
-   "tags": [
-    "농특산물",
-    "퀴즈",
-    "밀양",
-    "얼음골사과"
-   ],
-   "note": "전국 누구나. 당첨자 명단 2026-11-30 18시 이후 누리집 게시.",
-   "verifiedAt": "2026-11-25",
-   "addedAt": "2026-11-25T08:44:00+09:00",
-   "sourceLabel": "밀양시 대표누리집 이벤트 팝업",
-   "source": "공식 확인",
-   "announceDate": "",
-   "announceNote": "",
-   "cautions": "",
-   "target": "",
-   "steps": [],
-   "winners": "115명",
-   "entryType": "퀴즈·퍼즐",
-   "prizeType": "현물·전자기기",
-   "dday": 1,
-   "status": "마감임박"
-  },
-  {
-   "id": "donga-sinchun-2027",
-   "title": "2027 동아신춘문예",
-   "organizer": "동아일보사",
-   "category": "기업",
-   "type": "공모전",
-   "start": "",
-   "end": "2026-11-27",
-   "endTime": "",
-   "prize": "중편소설 3,000만원(동아 인산문학상) · 단편소설 700만원 · 시 500만원 · 시조·희곡·동화·시나리오·문학평론·영화평론 각 300만원",
-   "howTo": "우편 접수 — (03187) 서울 종로구 청계천로1 동아일보사 편집국 문화부 신춘문예 담당자 앞 (마감일 소인 유효)",
-   "url": "https://sinchoon.donga.com/Docs",
-   "tags": [
-    "신춘문예",
-    "문학",
-    "소설",
-    "시"
-   ],
-   "note": "생성형 AI로 작성한 사실이 확인되면 당선이 취소됩니다. 발표 2027-01-01 지면.",
-   "verifiedAt": "2026-11-25",
-   "addedAt": "2026-11-25T08:48:00+09:00",
-   "sourceLabel": "동아신춘문예 공모요강",
-   "source": "공식 확인",
-   "announceDate": "",
-   "announceNote": "",
-   "cautions": "",
-   "target": "",
-   "steps": [],
-   "winners": "",
-   "entryType": "공모·제출",
-   "prizeType": "기타",
-   "dday": 1,
-   "status": "마감임박"
-  },
-  {
-   "id": "rda-hidden-nongdarak-2026",
-   "title": "숨은 농다락을 찾아라!",
-   "organizer": "농촌진흥청",
-   "category": "정부·지자체",
-   "type": "경품·이벤트",
-   "start": "2026-11-16",
-   "end": "2026-11-27",
-   "endTime": "",
-   "prize": "이삭이 쿠션 10명 · 네이버페이 1만원 190명 (총 200명)",
-   "howTo": "농진청 누리집 21곳 중 3곳에서 숨은 농다락 캐릭터를 찾아 화면 캡처 → 농사로 이벤트 페이지 응모란에 3장 업로드",
-   "url": "https://www.nongsaro.go.kr/portal/ps/psx/psxn/eventSurveyDtl.ps?colmnNo=153&infoNo=153&menuId=PS65355",
-   "tags": [
-    "네이버페이",
-    "캐릭터찾기",
-    "농사로",
-    "농촌진흥청"
-   ],
-   "note": "누구나 참여 가능. 당첨자 발표일은 공고에 없습니다.",
-   "verifiedAt": "2026-11-25",
-   "addedAt": "2026-11-25T08:42:00+09:00",
-   "sourceLabel": "농사로 설문/이벤트 공식 페이지",
-   "source": "공식 확인",
-   "announceDate": "",
-   "announceNote": "",
-   "cautions": "",
-   "target": "",
-   "steps": [],
-   "winners": "200명",
-   "entryType": "댓글·참여인증",
-   "prizeType": "상품권·페이",
-   "dday": 1,
-   "status": "마감임박"
-  },
   {
    "id": "sto-seoul-tourism-promptthon-2026",
    "title": "2026 서울관광 프롬프톤 (Seoul Tourism Prompt-thon)",
@@ -219,7 +49,7 @@
    "winners": "",
    "entryType": "공모·제출",
    "prizeType": "상금·시상",
-   "dday": 3,
+   "dday": 1,
    "status": "마감임박"
   },
   {
@@ -253,7 +83,7 @@
    "winners": "72명",
    "entryType": "퀴즈·퍼즐",
    "prizeType": "기프티콘",
-   "dday": 3,
+   "dday": 1,
    "status": "마감임박"
   },
   {
@@ -286,7 +116,7 @@
    "winners": "100명",
    "entryType": "퀴즈·퍼즐",
    "prizeType": "기타",
-   "dday": 4,
+   "dday": 2,
    "status": "마감임박"
   },
   {
@@ -320,7 +150,7 @@
    "winners": "5명",
    "entryType": "공모·제출",
    "prizeType": "상금·시상",
-   "dday": 4,
+   "dday": 2,
    "status": "마감임박"
   },
   {
@@ -354,7 +184,7 @@
    "winners": "",
    "entryType": "공모·제출",
    "prizeType": "상금·시상",
-   "dday": 4,
+   "dday": 2,
    "status": "마감임박"
   },
   {
@@ -388,140 +218,7 @@
    "winners": "",
    "entryType": "공모·제출",
    "prizeType": "상금·시상",
-   "dday": 4,
-   "status": "마감임박"
-  },
-  {
-   "id": "auto-ff0904660e",
-   "title": "서울시 착한가격업소 방문 이벤트",
-   "organizer": "서울특별시 공정경제과",
-   "category": "정부·지자체",
-   "type": "경품·이벤트",
-   "start": "2026-09-14",
-   "end": "2026-11-30",
-   "endTime": "",
-   "announceDate": "",
-   "announceNote": "[이벤트1] 5% 페이백 자동 지급(서울Pay+앱 확인, 1차 11.20. 2차 12.20. 순차 지급) [이벤트2] 만족도 조사 경품 당첨자 ",
-   "winners": "",
-   "prize": "원문 확인",
-   "howTo": "참여 대상: [이벤트1] 착한가격업소에서 서울사랑상품권으로 결제한 소비자 [이벤트2] 서울시 착한가격업소 이용 후 착한가격업소 만족도 참여 완료한 소비자",
-   "steps": [],
-   "cautions": "",
-   "target": "[이벤트1] 착한가격업소에서 서울사랑상품권으로 결제한 소비자 [이벤트2] 서울시 착한가격업소 이용 후 착한가격업소 만족도 참여 완료한 소비자",
-   "url": "https://sftc.seoul.go.kr/seoul/mulga/bbs/B0000001/view.do?nttId=1103&menuNo=200029&pageIndex=1",
-   "tags": [
-    "서울특별시",
-    "서울특별시 공정경제과"
-   ],
-   "note": "",
-   "verifiedAt": "2026-11-26",
-   "addedAt": "2026-11-26T13:32:23.710Z",
-   "source": "자동수집",
-   "sourceLabel": "내 손안에 서울 이벤트",
-   "sourceId": "seoul-event",
-   "entryType": "설문·투표",
-   "prizeType": "기타",
-   "dday": 4,
-   "status": "마감임박"
-  },
-  {
-   "id": "auto-a3c4ddc0a4",
-   "title": "[서울배달+땡겨요] 한강 배달존 특별 이벤트",
-   "organizer": "서울특별시 / 신한 땡겨요사업단",
-   "category": "정부·지자체",
-   "type": "경품·이벤트",
-   "start": "2026-10-01",
-   "end": "2026-11-30",
-   "endTime": "",
-   "announceDate": "",
-   "announceNote": "즉시",
-   "winners": "",
-   "prize": "원문 확인",
-   "howTo": "참여 대상: 땡겨요에서 한강배달존으로 주소설정하고 음식배달시킨 누구나",
-   "steps": [],
-   "cautions": "",
-   "target": "땡겨요에서 한강배달존으로 주소설정하고 음식배달시킨 누구나",
-   "url": "https://fdofd.ddangyo.com/gateway.html",
-   "tags": [
-    "서울특별시",
-    "서울특별시 / 신한 땡겨요사업단"
-   ],
-   "note": "",
-   "verifiedAt": "2026-11-26",
-   "addedAt": "2026-11-26T13:32:23.711Z",
-   "source": "자동수집",
-   "sourceLabel": "내 손안에 서울 이벤트",
-   "sourceId": "seoul-event",
-   "entryType": "단순응모",
-   "prizeType": "기타",
-   "dday": 4,
-   "status": "마감임박"
-  },
-  {
-   "id": "auto-ef7a786670",
-   "title": "서울미래인재재단 대표 캐릭터 공모전",
-   "organizer": "서울미래인재재단",
-   "category": "공공기관",
-   "type": "공모전",
-   "start": "2026-11-16",
-   "end": "2026-11-30",
-   "endTime": "",
-   "announceDate": "",
-   "announceNote": "수상자 개별 안내 및 서울미래인재재단 누리집 게시",
-   "winners": "6명",
-   "prize": "6명(팀), 시상금 총 440만 원",
-   "howTo": "참여 대상: 개인 또는 4인 이하 팀 누구나",
-   "steps": [],
-   "cautions": "",
-   "target": "개인 또는 4인 이하 팀 누구나",
-   "url": "https://sffcharacter.kr/once.html",
-   "tags": [
-    "서울특별시",
-    "공모전",
-    "서울미래인재재단"
-   ],
-   "note": "",
-   "verifiedAt": "2026-11-26",
-   "addedAt": "2026-11-26T13:32:30.887Z",
-   "source": "자동수집",
-   "sourceLabel": "내 손안에 서울 공모전",
-   "sourceId": "seoul-contest",
-   "entryType": "공모·제출",
-   "prizeType": "상금·시상",
-   "dday": 4,
-   "status": "마감임박"
-  },
-  {
-   "id": "auto-3f1846b646",
-   "title": "2026 민박업 운영자 온라인 교육 수강 이벤트",
-   "organizer": "한국관광공사",
-   "category": "공공기관",
-   "type": "경품·이벤트",
-   "start": "2026-06-08",
-   "end": "2026-11-30",
-   "endTime": "",
-   "prize": "원문 확인",
-   "howTo": "관광e배움터 이벤트 안내 확인",
-   "url": "https://touredu.visitkorea.or.kr/home/support/promotions/prgs/13478",
-   "tags": [
-    "관광e배움터",
-    "한국관광공사"
-   ],
-   "note": "",
-   "verifiedAt": "2026-11-26",
-   "addedAt": "2026-11-24T23:57:43.668Z",
-   "source": "자동수집",
-   "sourceLabel": "관광e배움터 이벤트",
-   "sourceId": "touredu-kto-event",
-   "announceDate": "",
-   "announceNote": "",
-   "winners": "",
-   "steps": [],
-   "cautions": "",
-   "target": "",
-   "entryType": "단순응모",
-   "prizeType": "기타",
-   "dday": 4,
+   "dday": 2,
    "status": "마감임박"
   },
   {
@@ -561,7 +258,7 @@
    "difficulty": "인증·공모",
    "entryType": "댓글·참여인증",
    "prizeType": "기프티콘",
-   "dday": 4,
+   "dday": 2,
    "status": "마감임박"
   },
   {
@@ -601,7 +298,7 @@
    "difficulty": "인증·공모",
    "entryType": "댓글·참여인증",
    "prizeType": "현물·전자기기",
-   "dday": 4,
+   "dday": 2,
    "status": "마감임박"
   },
   {
@@ -641,7 +338,140 @@
    "difficulty": "1분 간편",
    "entryType": "단순응모",
    "prizeType": "상품권·페이",
-   "dday": 4,
+   "dday": 2,
+   "status": "마감임박"
+  },
+  {
+   "id": "auto-ff0904660e",
+   "title": "서울시 착한가격업소 방문 이벤트",
+   "organizer": "서울특별시 공정경제과",
+   "category": "정부·지자체",
+   "type": "경품·이벤트",
+   "start": "2026-09-14",
+   "end": "2026-11-30",
+   "endTime": "",
+   "announceDate": "",
+   "announceNote": "[이벤트1] 5% 페이백 자동 지급(서울Pay+앱 확인, 1차 11.20. 2차 12.20. 순차 지급) [이벤트2] 만족도 조사 경품 당첨자 ",
+   "winners": "",
+   "prize": "원문 확인",
+   "howTo": "참여 대상: [이벤트1] 착한가격업소에서 서울사랑상품권으로 결제한 소비자 [이벤트2] 서울시 착한가격업소 이용 후 착한가격업소 만족도 참여 완료한 소비자",
+   "steps": [],
+   "cautions": "",
+   "target": "[이벤트1] 착한가격업소에서 서울사랑상품권으로 결제한 소비자 [이벤트2] 서울시 착한가격업소 이용 후 착한가격업소 만족도 참여 완료한 소비자",
+   "url": "https://sftc.seoul.go.kr/seoul/mulga/bbs/B0000001/view.do?nttId=1103&menuNo=200029&pageIndex=1",
+   "tags": [
+    "서울특별시",
+    "서울특별시 공정경제과"
+   ],
+   "note": "",
+   "verifiedAt": "2026-11-28",
+   "addedAt": "2026-11-26T13:32:23.710Z",
+   "source": "자동수집",
+   "sourceLabel": "내 손안에 서울 이벤트",
+   "sourceId": "seoul-event",
+   "entryType": "설문·투표",
+   "prizeType": "기타",
+   "dday": 2,
+   "status": "마감임박"
+  },
+  {
+   "id": "auto-a3c4ddc0a4",
+   "title": "[서울배달+땡겨요] 한강 배달존 특별 이벤트",
+   "organizer": "서울특별시 / 신한 땡겨요사업단",
+   "category": "정부·지자체",
+   "type": "경품·이벤트",
+   "start": "2026-10-01",
+   "end": "2026-11-30",
+   "endTime": "",
+   "announceDate": "",
+   "announceNote": "즉시",
+   "winners": "",
+   "prize": "원문 확인",
+   "howTo": "참여 대상: 땡겨요에서 한강배달존으로 주소설정하고 음식배달시킨 누구나",
+   "steps": [],
+   "cautions": "",
+   "target": "땡겨요에서 한강배달존으로 주소설정하고 음식배달시킨 누구나",
+   "url": "https://fdofd.ddangyo.com/gateway.html",
+   "tags": [
+    "서울특별시",
+    "서울특별시 / 신한 땡겨요사업단"
+   ],
+   "note": "",
+   "verifiedAt": "2026-11-28",
+   "addedAt": "2026-11-26T13:32:23.711Z",
+   "source": "자동수집",
+   "sourceLabel": "내 손안에 서울 이벤트",
+   "sourceId": "seoul-event",
+   "entryType": "단순응모",
+   "prizeType": "기타",
+   "dday": 2,
+   "status": "마감임박"
+  },
+  {
+   "id": "auto-ef7a786670",
+   "title": "서울미래인재재단 대표 캐릭터 공모전",
+   "organizer": "서울미래인재재단",
+   "category": "공공기관",
+   "type": "공모전",
+   "start": "2026-11-16",
+   "end": "2026-11-30",
+   "endTime": "",
+   "announceDate": "",
+   "announceNote": "수상자 개별 안내 및 서울미래인재재단 누리집 게시",
+   "winners": "6명",
+   "prize": "6명(팀), 시상금 총 440만 원",
+   "howTo": "참여 대상: 개인 또는 4인 이하 팀 누구나",
+   "steps": [],
+   "cautions": "",
+   "target": "개인 또는 4인 이하 팀 누구나",
+   "url": "https://sffcharacter.kr/once.html",
+   "tags": [
+    "서울특별시",
+    "공모전",
+    "서울미래인재재단"
+   ],
+   "note": "",
+   "verifiedAt": "2026-11-28",
+   "addedAt": "2026-11-26T13:32:30.887Z",
+   "source": "자동수집",
+   "sourceLabel": "내 손안에 서울 공모전",
+   "sourceId": "seoul-contest",
+   "entryType": "공모·제출",
+   "prizeType": "상금·시상",
+   "dday": 2,
+   "status": "마감임박"
+  },
+  {
+   "id": "auto-3f1846b646",
+   "title": "2026 민박업 운영자 온라인 교육 수강 이벤트",
+   "organizer": "한국관광공사",
+   "category": "공공기관",
+   "type": "경품·이벤트",
+   "start": "2026-06-08",
+   "end": "2026-11-30",
+   "endTime": "",
+   "prize": "원문 확인",
+   "howTo": "관광e배움터 이벤트 안내 확인",
+   "url": "https://touredu.visitkorea.or.kr/home/support/promotions/prgs/13478",
+   "tags": [
+    "관광e배움터",
+    "한국관광공사"
+   ],
+   "note": "",
+   "verifiedAt": "2026-11-28",
+   "addedAt": "2026-11-24T23:57:43.668Z",
+   "source": "자동수집",
+   "sourceLabel": "관광e배움터 이벤트",
+   "sourceId": "touredu-kto-event",
+   "announceDate": "",
+   "announceNote": "",
+   "winners": "",
+   "steps": [],
+   "cautions": "",
+   "target": "",
+   "entryType": "단순응모",
+   "prizeType": "기타",
+   "dday": 2,
    "status": "마감임박"
   },
   {
@@ -675,7 +505,7 @@
    "winners": "100명",
    "entryType": "설문·투표",
    "prizeType": "기프티콘",
-   "dday": 6,
+   "dday": 4,
    "status": "마감임박"
   },
   {
@@ -709,7 +539,7 @@
    "winners": "304명",
    "entryType": "설문·투표",
    "prizeType": "상품권·페이",
-   "dday": 6,
+   "dday": 4,
    "status": "마감임박"
   },
   {
@@ -749,7 +579,7 @@
    "difficulty": "1분 간편",
    "entryType": "단순응모",
    "prizeType": "기프티콘",
-   "dday": 6,
+   "dday": 4,
    "status": "마감임박"
   },
   {
@@ -783,8 +613,8 @@
    "winners": "100명",
    "entryType": "설문·투표",
    "prizeType": "상품권·페이",
-   "dday": 8,
-   "status": "진행중"
+   "dday": 6,
+   "status": "마감임박"
   },
   {
    "id": "nhis-reboom-contest-2026",
@@ -817,8 +647,8 @@
    "winners": "",
    "entryType": "공모·제출",
    "prizeType": "상금·시상",
-   "dday": 8,
-   "status": "진행중"
+   "dday": 6,
+   "status": "마감임박"
   },
   {
    "id": "nps-basic-pension-quiz-2026",
@@ -851,8 +681,8 @@
    "winners": "400명",
    "entryType": "퀴즈·퍼즐",
    "prizeType": "상품권·페이",
-   "dday": 8,
-   "status": "진행중"
+   "dday": 6,
+   "status": "마감임박"
   },
   {
    "id": "kma-jeonbuk-science-24jeolgi-2026",
@@ -885,7 +715,7 @@
    "winners": "5명",
    "entryType": "퀴즈·퍼즐",
    "prizeType": "기프티콘",
-   "dday": 10,
+   "dday": 8,
    "status": "진행중"
   },
   {
@@ -919,7 +749,7 @@
    "winners": "100명",
    "entryType": "설문·투표",
    "prizeType": "상품권·페이",
-   "dday": 10,
+   "dday": 8,
    "status": "진행중"
   },
   {
@@ -949,14 +779,14 @@
     "서울시보건환경연구원 운영기획부"
    ],
    "note": "",
-   "verifiedAt": "2026-11-26",
+   "verifiedAt": "2026-11-28",
    "addedAt": "2026-11-26T13:31:26.406Z",
    "source": "자동수집",
    "sourceLabel": "내 손안에 서울 이벤트",
    "sourceId": "seoul-event",
    "entryType": "댓글·참여인증",
    "prizeType": "상품권·페이",
-   "dday": 10,
+   "dday": 8,
    "status": "진행중"
   },
   {
@@ -982,14 +812,14 @@
     "한국관광공사"
    ],
    "note": "",
-   "verifiedAt": "2026-11-26",
+   "verifiedAt": "2026-11-28",
    "addedAt": "2026-11-26T13:31:35.006Z",
    "source": "자동수집",
    "sourceLabel": "관광e배움터 이벤트",
    "sourceId": "touredu-kto-event",
    "entryType": "댓글·참여인증",
    "prizeType": "기타",
-   "dday": 12,
+   "dday": 10,
    "status": "진행중"
   },
   {
@@ -1029,7 +859,7 @@
    "difficulty": "1분 간편",
    "entryType": "퀴즈·퍼즐",
    "prizeType": "상품권·페이",
-   "dday": 15,
+   "dday": 13,
    "status": "진행중"
   },
   {
@@ -1066,7 +896,7 @@
    "source": "공식 확인",
    "entryType": "단순응모",
    "prizeType": "기프티콘",
-   "dday": 17,
+   "dday": 15,
    "status": "진행중"
   },
   {
@@ -1086,7 +916,7 @@
     "한국관광공사"
    ],
    "note": "",
-   "verifiedAt": "2026-11-26",
+   "verifiedAt": "2026-11-28",
    "addedAt": "2026-11-24T23:57:43.668Z",
    "source": "자동수집",
    "sourceLabel": "관광e배움터 이벤트",
@@ -1099,7 +929,7 @@
    "target": "",
    "entryType": "단순응모",
    "prizeType": "기타",
-   "dday": 17,
+   "dday": 15,
    "status": "진행중"
   },
   {
@@ -1136,40 +966,7 @@
    "source": "공식 확인",
    "entryType": "댓글·참여인증",
    "prizeType": "상품권·페이",
-   "dday": 19,
-   "status": "진행중"
-  },
-  {
-   "id": "auto-57008418c7",
-   "title": "통쾌한 한끼 식당을 찾아라 시민 참여 이벤트",
-   "organizer": "서울특별시 식품정책과",
-   "category": "정부·지자체",
-   "type": "경품·이벤트",
-   "start": "2026-11-04",
-   "end": "2026-12-18",
-   "endTime": "",
-   "announceDate": "",
-   "announceNote": "손목닥터 9988 에서 2주 이내 확인가능",
-   "winners": "",
-   "prize": "원문 확인",
-   "howTo": "참여 대상: 손목닥터 9988을 사용하는 서울시민",
-   "steps": [],
-   "cautions": "",
-   "target": "손목닥터 9988을 사용하는 서울시민",
-   "url": "https://news.seoul.go.kr/welfare/archives/584321",
-   "tags": [
-    "서울특별시",
-    "서울특별시 식품정책과"
-   ],
-   "note": "",
-   "verifiedAt": "2026-11-26",
-   "addedAt": "2026-11-26T13:32:23.711Z",
-   "source": "자동수집",
-   "sourceLabel": "내 손안에 서울 이벤트",
-   "sourceId": "seoul-event",
-   "entryType": "단순응모",
-   "prizeType": "기타",
-   "dday": 22,
+   "dday": 17,
    "status": "진행중"
   },
   {
@@ -1209,7 +1006,40 @@
    "difficulty": "1분 간편",
    "entryType": "댓글·참여인증",
    "prizeType": "기타",
-   "dday": 22,
+   "dday": 20,
+   "status": "진행중"
+  },
+  {
+   "id": "auto-57008418c7",
+   "title": "통쾌한 한끼 식당을 찾아라 시민 참여 이벤트",
+   "organizer": "서울특별시 식품정책과",
+   "category": "정부·지자체",
+   "type": "경품·이벤트",
+   "start": "2026-11-04",
+   "end": "2026-12-18",
+   "endTime": "",
+   "announceDate": "",
+   "announceNote": "손목닥터 9988 에서 2주 이내 확인가능",
+   "winners": "",
+   "prize": "원문 확인",
+   "howTo": "참여 대상: 손목닥터 9988을 사용하는 서울시민",
+   "steps": [],
+   "cautions": "",
+   "target": "손목닥터 9988을 사용하는 서울시민",
+   "url": "https://news.seoul.go.kr/welfare/archives/584321",
+   "tags": [
+    "서울특별시",
+    "서울특별시 식품정책과"
+   ],
+   "note": "",
+   "verifiedAt": "2026-11-28",
+   "addedAt": "2026-11-26T13:32:23.711Z",
+   "source": "자동수집",
+   "sourceLabel": "내 손안에 서울 이벤트",
+   "sourceId": "seoul-event",
+   "entryType": "단순응모",
+   "prizeType": "기타",
+   "dday": 20,
    "status": "진행중"
   },
   {
@@ -1240,14 +1070,14 @@
     "서울AI재단"
    ],
    "note": "",
-   "verifiedAt": "2026-11-26",
+   "verifiedAt": "2026-11-28",
    "addedAt": "2026-11-26T13:32:23.711Z",
    "source": "자동수집",
    "sourceLabel": "내 손안에 서울 이벤트",
    "sourceId": "seoul-event",
    "entryType": "단순응모",
    "prizeType": "기타",
-   "dday": 24,
+   "dday": 22,
    "status": "진행중"
   },
   {
@@ -1284,7 +1114,7 @@
    "source": "공식 확인",
    "entryType": "퀴즈·퍼즐",
    "prizeType": "상품권·페이",
-   "dday": 25,
+   "dday": 23,
    "status": "진행중"
   },
   {
@@ -1318,7 +1148,7 @@
    "winners": "3명",
    "entryType": "퀴즈·퍼즐",
    "prizeType": "기프티콘",
-   "dday": 25,
+   "dday": 23,
    "status": "진행중"
   },
   {
@@ -1355,7 +1185,7 @@
    "source": "공식 확인",
    "entryType": "단순응모",
    "prizeType": "상품권·페이",
-   "dday": 35,
+   "dday": 33,
    "status": "진행중"
   },
   {
@@ -1396,7 +1226,7 @@
    "difficulty": "인증·공모",
    "entryType": "댓글·참여인증",
    "prizeType": "상품권·페이",
-   "dday": 35,
+   "dday": 33,
    "status": "진행중"
   },
   {
@@ -1436,7 +1266,7 @@
    "difficulty": "인증·공모",
    "entryType": "단순응모",
    "prizeType": "상금·시상",
-   "dday": 35,
+   "dday": 33,
    "status": "진행중"
   },
   {
@@ -1476,7 +1306,7 @@
    "difficulty": "1분 간편",
    "entryType": "댓글·참여인증",
    "prizeType": "상품권·페이",
-   "dday": 35,
+   "dday": 33,
    "status": "진행중"
   },
   {
@@ -1516,7 +1346,7 @@
    "difficulty": "인증·공모",
    "entryType": "단순응모",
    "prizeType": "현물·전자기기",
-   "dday": 35,
+   "dday": 33,
    "status": "진행중"
   },
   {
@@ -1543,14 +1373,14 @@
     "서울공예박물관 전시기획과"
    ],
    "note": "",
-   "verifiedAt": "2026-11-26",
+   "verifiedAt": "2026-11-28",
    "addedAt": "2026-11-26T13:32:30.887Z",
    "source": "자동수집",
    "sourceLabel": "내 손안에 서울 공모전",
    "sourceId": "seoul-contest",
    "entryType": "공모·제출",
    "prizeType": "기타",
-   "dday": 45,
+   "dday": 43,
    "status": "진행중"
   },
   {
@@ -1587,7 +1417,7 @@
    "source": "공식 확인",
    "entryType": "단순응모",
    "prizeType": "기프티콘",
-   "dday": 66,
+   "dday": 64,
    "status": "진행중"
   }
  ]

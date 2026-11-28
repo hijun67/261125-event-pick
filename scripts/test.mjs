@@ -241,6 +241,18 @@ ok('상세 페이지에 JSON-LD Event', oneDetail.includes('"@type":"Event"'));
 ok('상세 페이지에 공식 원문 링크', oneDetail.includes(escapeHtml(data[0].url)) && oneDetail.includes('btn-compact'));
 ok('상세 페이지에 구조화 정보(당첨 인원·발표일)', oneDetail.includes('당첨 인원') && oneDetail.includes('발표일'));
 
+/* 4-b. 검증용 고정 날짜(TODAY=2026-11-26)로 만든 public/을 실제 오늘 기준으로 되돌립니다.
+   이 단계가 없으면 테스트만 돌려도 배포본의 "확인일"이 11-26에 멈춥니다. */
+console.log('\n[4-b] public/을 실제 오늘 기준으로 재빌드');
+execFileSync(process.execPath, [path.join(ROOT, 'scripts/build.mjs')], {
+  cwd: ROOT,
+  env: { ...process.env, SITE_URL: 'https://event-pick.pages.dev', TODAY: '' },
+  stdio: 'pipe',
+});
+const rebuilt = JSON.parse(fs.readFileSync(path.join(pub, 'data/events.json'), 'utf8'));
+ok('재빌드 확인일 = 오늘(KST)', rebuilt.updatedAt === TODAY, rebuilt.updatedAt);
+ok('재빌드 목록에 마감 지난 이벤트 없음', rebuilt.events.every((e) => e.end >= TODAY));
+
 console.log(`\n결과: ${pass}개 통과, ${fails.length}개 실패`);
 if (fails.length) {
   console.log('\n실패 목록:\n' + fails.map((f) => ' - ' + f).join('\n'));
